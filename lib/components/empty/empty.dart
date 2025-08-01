@@ -1,0 +1,23 @@
+import 'package:flutter/cupertino.dart';
+import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+
+part 'empty.g.dart';
+
+@swidget
+Widget empty(BuildContext context) {
+  return Center(
+    child: Wrap(
+      spacing: 16,
+      direction: Axis.vertical,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        Image.asset(
+          width: 120,
+          height: 120,
+          'assets/images/empty-box.png'
+        ),
+        Text('这里什么都没有'),
+      ],
+    ),
+  );
+}

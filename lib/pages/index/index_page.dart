@@ -1,0 +1,149 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ming_cute_icons/ming_cute_icons.dart';
+import 'package:my_social/components/logo/app_logo.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+part 'index_page.g.dart';
+
+/*
+首页内容规划
+自上而下：
+logo
+标语
+
+登录按钮
+用户协议
+ */
+
+@hwidget
+Widget indexPage(BuildContext context){
+  var confirmPermit = useState<bool>(false);
+
+  return Scaffold(
+    body: Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color.fromARGB(255, 173, 220, 208),
+            Color.fromARGB(255, 239, 249, 246),
+            Colors.white,
+            Color.fromARGB(255, 239, 249, 246),
+            Color.fromARGB(255, 173, 220, 208),
+          ],
+          stops: [0,0.15,0.5,0.85,1.0],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+
+      padding: EdgeInsets.only(
+        top: 120,
+        bottom: 80,
+        left: 16,
+        right: 16
+      ),
+      child: Column(
+        children: [
+          AppLogo(),
+          SizedBox(height: 4),
+          Text(
+            '分享你的生活，记录点滴',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2
+            ),
+            
+          ),
+
+          Spacer(),
+
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton(
+              child: Wrap(
+                spacing: 8,
+                children: [
+                  Icon(MingCuteIcons.mgc_user_2_fill),
+                  Text('账户登录')
+                ],
+              ),
+              onPressed: (){
+                context.push('/account-login');
+              },
+            ),
+          ),
+
+          SizedBox(height: 8),
+
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              child: Wrap(
+                spacing: 8,
+                children: [
+                  Icon(MingCuteIcons.mgc_phone_fill),
+                  Text('手机号登录')
+                ],
+              ),
+              onPressed: () {
+                context.push('/sms-login');
+              },
+            ),
+          ),
+
+          SizedBox(
+            height: 24,
+          ),
+
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Checkbox.adaptive(
+                value: confirmPermit.value,
+                onChanged: (value) {
+                  confirmPermit.value = value!;
+                },
+              ),
+              Text(
+                '我已阅读并同意 ',
+                style: TextStyle(
+                  fontSize: 14
+                ),
+              ),
+              
+              GestureDetector(
+                child: Text(
+                  '《用户协议》',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black87
+                  ),
+                ),
+                onTap: () {
+                
+                },
+              ),
+              GestureDetector(
+                child: Text(
+                  '《隐私政策》',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black87
+                  ),
+                ),
+                onTap: () {
+                
+                },
+              ),
+
+            ],
+          )
+        ],
+      )
+    ),
+  );
+}
