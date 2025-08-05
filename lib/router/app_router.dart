@@ -5,6 +5,7 @@ import 'package:ming_cute_icons/ming_cute_icons.dart';
 import 'package:my_social/pages/common/default_app_bar.dart';
 import 'package:my_social/pages/home/home_page.dart';
 import 'package:my_social/pages/note/note_detail_page.dart';
+import 'package:my_social/pages/overview/drawer_route.dart';
 import 'package:my_social/pages/overview/overview_page.dart';
 import 'package:my_social/pages/index/index_page.dart';
 import 'package:my_social/pages/login/login_page.dart';
@@ -78,6 +79,34 @@ class AppRouterHolder{
                     activeIcon: Icon(MingCuteIcons.mgc_user_2_fill),
                   ),
                 ],
+              ),
+
+              drawerRoute: DrawerRoute(
+                list: [
+                  DrawerRouteListItem(
+                    title: 'AI助手',
+                    icon: Icon(MingCuteIcons.mgc_chat_2_line),
+                  ),
+                  DrawerRouteListGroup(
+                    items: [
+                      DrawerRouteListItem(
+                        title: '我的评论',
+                        icon: Icon(MingCuteIcons.mgc_comment_2_line),
+                        path: '/my-comment'
+                      ),
+                      DrawerRouteListItem(
+                        title: '历史浏览',
+                        icon: Icon(MingCuteIcons.mgc_history_2_line),
+                        path: '/hist-view'
+                      ),
+                    ]
+                  ),
+                  DrawerRouteListItem(
+                    title: '社区公约',
+                    icon: Icon(MingCuteIcons.mgc_leaf_2_line),
+                    path: '/comm-conv'
+                  )
+                ]
               ),
             ),
           ),
