@@ -9,6 +9,7 @@ import 'package:my_social/pages/overview/overview_page.dart';
 import 'package:my_social/pages/index/index_page.dart';
 import 'package:my_social/pages/login/login_page.dart';
 import 'package:my_social/pages/overview/tab_route.dart';
+import 'package:my_social/pages/short_video/short_video_page.dart';
 import 'package:my_social/store/login/login_store.dart';
 
 class AppRouterHolder{
@@ -64,6 +65,7 @@ class AppRouterHolder{
                     tabName: '热门',
                     icon: Icon(MingCuteIcons.mgc_video_line),
                     activeIcon: Icon(MingCuteIcons.mgc_video_fill),
+                    body: ShortVideoPageBody()
                   ),
                   TabRouteItem(
                     tabName: '消息',

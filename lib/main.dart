@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:my_social/router/app_router.dart';
 import 'package:my_social/theme/app_theme.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:my_social/utils/window_utils.dart';
 
 part 'main.g.dart';
 
@@ -15,6 +16,10 @@ void main(){
 Widget mySocialApp(BuildContext context){
   AppRouterHolder routerHolder = AppRouterHolder();
   AppThemeHolder themeHolder = AppThemeHolder();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  WindowUtils.initialize();
+  MediaKit.ensureInitialized();
 
   return ProviderScope(
     child: MaterialApp.router(

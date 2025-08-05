@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:my_social/model/response/base_result.dart';
 
 class NoteInfoResult extends BaseResult {

@@ -14,5 +14,8 @@ class ShortVideoPageBody extends HookConsumerWidget {
     BuildContext _context,
     WidgetRef _ref,
   ) =>
-      shortVideoPageBody(_context);
+      shortVideoPageBody(
+        _context,
+        _ref,
+      );
 }

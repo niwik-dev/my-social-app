@@ -1,7 +1,7 @@
-import '../../model/view/video_info.dart';
+import 'package:my_social/model/response/short_video_info_result.dart';
 
 class ShortVideoList{
-  List<VideoInfo> videoList = [];
+  List<ShortVideoInfoResult> videoList = [];
   int currentVideoIndex = 0;
 
   ShortVideoList({

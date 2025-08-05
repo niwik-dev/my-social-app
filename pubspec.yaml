@@ -34,12 +34,15 @@ dependencies:
   # Dio： Flutter目前最主流的，基于HttpClient的Http请求库
   dio: ^5.8.0+1
 
+  # WindowManager：窗口管理库，提供无边框更定制化的窗口效果
+  window_manager: ^0.4.2
+
   # Functional Widget：使得Flutter从类组件转变为函数式组件，更接近于React
   functional_widget: ^0.10.2
   # Functional Widget Annotation：用于build_runner生成样板代码
   functional_widget_annotation: ^0.10.0
 
-    # Riverpod：Flutter全局状态管理库，适用于大型项目
+  # Riverpod：Flutter全局状态管理库，适用于大型项目
   flutter_riverpod: ^2.5.1
   # Riverpod Annotation：用于build_runner生成样板代码
   riverpod_annotation: ^2.3.5
@@ -56,9 +59,6 @@ dependencies:
 
   # GoRouter：更好用的声明式路由框架
   go_router: ^14.2.7
-
-  # Cupertino Icons：Cupertino风格图标
-  cupertino_icons: ^1.0.8
 
   # Ming Cute Icons：图标库
   ming_cute_icons: ^0.0.7

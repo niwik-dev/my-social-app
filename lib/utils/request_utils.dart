@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_social/router/app_router.dart';
 
 import '../store/login/login_store.dart';
 

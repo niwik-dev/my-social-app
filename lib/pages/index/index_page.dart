@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -8,18 +9,39 @@ import 'package:my_social/components/logo/app_logo.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 part 'index_page.g.dart';
 
-/*
-首页内容规划
-自上而下：
-logo
-标语
-
-登录按钮
-用户协议
- */
 
 @hwidget
 Widget indexPage(BuildContext context,GoRouterState state){
+  if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          barrierDismissible: false,
+          animationStyle: AnimationStyle(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            reverseCurve: Curves.easeInOut
+          ),
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('提示'),
+              content: const Text('检测到当前为PC平台，正在以兼容模式运行'),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('我已知晓'),
+                  onPressed: () {
+                    context.pop();
+                  }
+                )
+              ]
+            );
+          }
+        );
+      });
+    }, []);
+  }
+
   var confirmPermit = useState<bool>(false);
 
   // 如果是因为登录状态跳转的，获取到过期路由参数

@@ -88,6 +88,13 @@ class AppThemeHolder{
           ),
         ),
 
+        dialogTheme: DialogThemeData(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8)
+          )
+        ),
+
         filledButtonTheme: FilledButtonThemeData(
           style: FilledButton.styleFrom(
             padding: EdgeInsets.symmetric(
