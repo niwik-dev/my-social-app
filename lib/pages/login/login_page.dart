@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
 import 'package:my_social/api/restful/auth_api.dart';
 part 'login_page.g.dart';
 
-@hwidget
-Widget accoutLoginPage(BuildContext context){
+@hcwidget
+Widget accoutLoginPage(BuildContext context,WidgetRef ref){
   var username = useState<String>("");
   var password = useState<String>("");
   var captcha = useState<String>("");
@@ -19,7 +20,7 @@ Widget accoutLoginPage(BuildContext context){
   AuthApi authApi = AuthApi();
 
   useEffect((){
-    authApi.fetchCaptcha().then((Image image) { 
+    authApi.fetchCaptcha(ref).then((Image image) { 
       captchaImage.value = image;
     });
   },[]);
@@ -107,7 +108,7 @@ Widget accoutLoginPage(BuildContext context){
                     child: captchaImage.value ?? Placeholder(),
                   ),
                   onTap: () async{
-                    Image image = await authApi.fetchCaptcha();
+                    Image image = await authApi.fetchCaptcha(ref);
                     captchaImage.value = image;
                   },
                 )
@@ -140,6 +141,7 @@ Widget accoutLoginPage(BuildContext context){
                 child: Text('登录'),
                 onPressed: () async {
                   bool success = await AuthApi().login(
+                    ref,
                     username: username.value,
                     password: password.value,
                     captcha: captcha.value,
@@ -177,8 +179,8 @@ Widget accoutLoginPage(BuildContext context){
   );
 }
 
-@hwidget
-Widget phoneLoginPage(BuildContext context){
+@hcwidget
+Widget phoneLoginPage(BuildContext context,WidgetRef ref){
   var phoneNumber = useState<String>('');
   var smsCodeCountDown = useState<int>(0);
   var canSendSmsCode = useState<bool>(true);

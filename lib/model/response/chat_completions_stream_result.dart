@@ -4,11 +4,13 @@
 
 import 'dart:convert';
 
+import 'package:my_social/model/response/base_result.dart';
+
 ChatCompletionsStreamResult chatCompletionsStreamResultFromJson(String str) => ChatCompletionsStreamResult.fromJson(json.decode(str));
 
 String chatCompletionsStreamResultToJson(ChatCompletionsStreamResult data) => json.encode(data.toJson());
 
-class ChatCompletionsStreamResult {
+class ChatCompletionsStreamResult extends BaseResult {
   String? id;
   String? object;
   int? created;

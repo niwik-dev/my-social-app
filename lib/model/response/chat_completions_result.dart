@@ -4,11 +4,13 @@
 
 import 'dart:convert';
 
+import 'package:my_social/model/response/base_result.dart';
+
 ChatCompletionsResult chatCompletionsResultFromJson(String str) => ChatCompletionsResult.fromJson(json.decode(str));
 
 String chatCompletionsResultToJson(ChatCompletionsResult data) => json.encode(data.toJson());
 
-class ChatCompletionsResult {
+class ChatCompletionsResult extends BaseResult {
   String? id;
   List<Choice>? choices;
   Usage? usage;

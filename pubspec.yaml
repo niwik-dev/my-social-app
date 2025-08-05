@@ -46,6 +46,11 @@ dependencies:
   # Hooks Riverpod：Rivepod的Hooks适配库
   hooks_riverpod: ^2.6.1
 
+  # Video Player
+  media_kit: ^1.1.11 # Primary package.
+  media_kit_video: ^1.2.5 # For video rendering.
+  media_kit_libs_video: ^1.0.5 # Native video dependencies.
+
   # Staggered Grid View：瀑布流布局库
   flutter_staggered_grid_view: ^0.7.0
 

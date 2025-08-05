@@ -19,8 +19,14 @@ logo
  */
 
 @hwidget
-Widget indexPage(BuildContext context){
+Widget indexPage(BuildContext context,GoRouterState state){
   var confirmPermit = useState<bool>(false);
+
+  // 如果是因为登录状态跳转的，获取到过期路由参数
+  String? expired = state.pathParameters['expired'];
+  if(expired != null){
+    // TODO:处理登录过期逻辑
+  }
 
   return Scaffold(
     body: Container(

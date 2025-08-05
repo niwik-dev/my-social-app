@@ -21,7 +21,14 @@ class AppThemeHolder{
         checkboxTheme: CheckboxThemeData(
           splashRadius: 0
         ),
+        cardTheme: CardThemeData(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(2.0)
+          )
+        ),
         appBarTheme: AppBarTheme(
+          elevation: 0,
           iconTheme: IconThemeData(
             size: 20
           )

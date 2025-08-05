@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'index_page.dart';
+part of 'note_detail_page.dart';
 
 // **************************************************************************
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class IndexPage extends HookWidget {
-  const IndexPage(
+class NoteDetailPage extends HookConsumerWidget {
+  const NoteDetailPage(
     this.state, {
     Key? key,
   }) : super(key: key);
@@ -15,8 +15,13 @@ class IndexPage extends HookWidget {
   final GoRouterState state;
 
   @override
-  Widget build(BuildContext _context) => indexPage(
+  Widget build(
+    BuildContext _context,
+    WidgetRef _ref,
+  ) =>
+      noteDetailPage(
         _context,
+        _ref,
         state,
       );
 }

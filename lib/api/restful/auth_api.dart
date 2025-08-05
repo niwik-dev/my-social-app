@@ -9,13 +9,9 @@ class AuthApi{
   // 单例模式
   static final AuthApi _instance = AuthApi._internal();
   factory AuthApi() => _instance;
-  late LoginUserStore loginUserStoreNotifer;
 
   // 获取登录用户信息 存储状态
-  AuthApi._internal(){
-    ProviderContainer container = ProviderContainer();
-    loginUserStoreNotifer = container.read(loginUserStoreProvider.notifier);
-  }
+  AuthApi._internal();
 
   // 登录接口地址
   static const String baseUrl = "http://127.0.0.1:8989";
@@ -55,11 +51,12 @@ class AuthApi{
     return response;
   }
 
-  Future<Image> fetchCaptcha() async{
+  Future<Image> fetchCaptcha(WidgetRef ref) async{
     String url = "/api/v1/auth/captcha";
     Response response = await get(url);
     String base64 = response.data["data"]["captchaBase64"];
-    loginUserStoreNotifer.setLoginUser(
+
+    ref.watch(loginUserStoreProvider.notifier).setLoginUser(
       LoginUser(
         captchaKey: response.data["data"]["captchaKey"],
       )
@@ -72,7 +69,9 @@ class AuthApi{
     await post(url);
   }
 
-  Future<bool> login({
+  Future<bool> login(
+    WidgetRef ref,
+    {
     required String username,
     required String password,
     required String captcha
@@ -81,12 +80,12 @@ class AuthApi{
     Response response = await post('$url?username=$username&password=$password');
     if(response.statusCode == 200){
       if(response.data["code"] == "00000"){
-        loginUserStoreNotifer.setLoginUser(
+        ref.watch(loginUserStoreProvider.notifier).setLoginUser(
           LoginUser(
             username: username,
             isLoggedIn: true,
-            accessToken: response.data["accessToken"],
-            refreshToken: response.data["refreshToken"],
+            accessToken: response.data?["data"]["accessToken"],
+            refreshToken: response.data?["data"]["refreshToken"],
           )
         );
         return true;

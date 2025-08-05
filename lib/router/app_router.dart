@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
 import 'package:my_social/pages/common/default_app_bar.dart';
 import 'package:my_social/pages/home/home_page.dart';
+import 'package:my_social/pages/note/note_detail_page.dart';
 import 'package:my_social/pages/overview/overview_page.dart';
 import 'package:my_social/pages/index/index_page.dart';
 import 'package:my_social/pages/login/login_page.dart';
@@ -18,7 +19,6 @@ class AppRouterHolder{
 
   bool _init = false;
   late GoRouter _router;
-  ProviderContainer container = ProviderContainer();
 
   GoRouter getRouter(){
     if(!_init){
@@ -28,9 +28,10 @@ class AppRouterHolder{
           // App首页
           GoRoute(
             path: '/',
-            builder: (context, state) => IndexPage(),
+            builder: (context, state) => IndexPage(state),
           ),
 
+          // 账户登录
           GoRoute(
             path: '/account-login',
             builder: (context, state) => AccoutLoginPage(),
@@ -57,7 +58,7 @@ class AppRouterHolder{
                     tabName: '首页',
                     icon: Icon(MingCuteIcons.mgc_home_1_line),
                     activeIcon: Icon(MingCuteIcons.mgc_home_1_fill),
-                    body: homePageBody(context)
+                    body: HomePageBody()
                   ),
                   TabRouteItem(
                     tabName: '热门',
@@ -78,6 +79,11 @@ class AppRouterHolder{
               ),
             ),
           ),
+
+          GoRoute(
+            path: '/note/:noteId',
+            builder: (context, state) => NoteDetailPage(state),
+          )
         ],
       );
       _init = true;

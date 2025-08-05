@@ -64,11 +64,24 @@ Widget overviewPage(
             Gap(8),
             ListTile(
               title: Text('我的评论'),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(8)
+                )
+              ),
               leading: Icon(MingCuteIcons.mgc_comment_2_line),
+              style: ListTileStyle.drawer,
               onTap: () {},
             ),
             ListTile(
               title: Text('浏览记录'),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(8),
+                  bottomRight: Radius.circular(8)
+                )
+              ),
               leading: Icon(MingCuteIcons.mgc_history_line),
               onTap: () {},
             ),
