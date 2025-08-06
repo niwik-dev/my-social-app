@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
+import 'package:my_social/model/store/login_user.dart';
+import 'package:my_social/pages/ai_chat/ai_chat_page.dart';
 import 'package:my_social/pages/common/default_app_bar.dart';
+import 'package:my_social/pages/error/error_page.dart';
 import 'package:my_social/pages/home/home_page.dart';
 import 'package:my_social/pages/note/note_detail_page.dart';
 import 'package:my_social/pages/overview/drawer_route.dart';
@@ -10,6 +13,7 @@ import 'package:my_social/pages/overview/overview_page.dart';
 import 'package:my_social/pages/index/index_page.dart';
 import 'package:my_social/pages/login/login_page.dart';
 import 'package:my_social/pages/overview/tab_route.dart';
+import 'package:my_social/pages/setting/setting_page.dart';
 import 'package:my_social/pages/short_video/short_video_page.dart';
 import 'package:my_social/store/login/login_store.dart';
 
@@ -26,6 +30,9 @@ class AppRouterHolder{
     if(!_init){
       _router = GoRouter(
         initialLocation: '/',
+        // 错误页面
+        errorBuilder: (context, state) => ErrorPage(),
+
         routes: [
           // App首页
           GoRoute(
@@ -66,7 +73,9 @@ class AppRouterHolder{
                     tabName: '热门',
                     icon: Icon(MingCuteIcons.mgc_video_line),
                     activeIcon: Icon(MingCuteIcons.mgc_video_fill),
-                    body: ShortVideoPageBody()
+                    body: ShortVideoPageBody(),
+                    appBar: shortVideoPageAppBar(),
+                    dark: true
                   ),
                   TabRouteItem(
                     tabName: '消息',
@@ -111,10 +120,23 @@ class AppRouterHolder{
             ),
           ),
 
+          // 笔记详情页
           GoRoute(
             path: '/note/:noteId',
             builder: (context, state) => NoteDetailPage(state),
-          )
+          ),
+
+          // AI助手页面
+          GoRoute(
+            path: '/ai-assistant',
+            builder: (context, state) => AiChatPage(),
+          ),
+
+          // 设置页面
+          GoRoute(
+            path: '/settings',
+            builder: (context, state) => SettingPage(),
+          ),
         ],
       );
       _init = true;

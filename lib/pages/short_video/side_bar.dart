@@ -110,28 +110,28 @@ Widget shortVideoSideBar(
         const DefaultVideoAuthorAvatar(),
 
         sideBarIconButton(
-          icon: MingCuteIcons.mgc_comment_2_line,
+          icon: MingCuteIcons.mgc_comment_2_fill,
           label: '评论',
           number: videoInfo?.commentCount,
           onPressed: (){},
         ),
 
         sideBarIconButton(
-          icon: MingCuteIcons.mgc_thumb_up_2_line,
+          icon: MingCuteIcons.mgc_thumb_up_2_fill,
           label: '点赞',
           number: videoInfo?.diggCount,
           onPressed: (){},
         ),
 
         sideBarIconButton(
-          icon: MingCuteIcons.mgc_star_line,
+          icon: MingCuteIcons.mgc_star_fill,
           label: '收藏',
           number: videoInfo?.collectCount,
           onPressed: (){},
         ),
 
         sideBarIconButton(
-          icon: MingCuteIcons.mgc_share_2_line,
+          icon: MingCuteIcons.mgc_share_2_fill,
           label: '分享',
           number: videoInfo?.shareCount,
           onPressed: (){},

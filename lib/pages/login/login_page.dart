@@ -93,6 +93,7 @@ Widget accoutLoginPage(BuildContext context,WidgetRef ref){
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
+                      prefixIcon: Icon(MingCuteIcons.mgc_key_2_line),
                       hintText: '验证码',
                     ),
                     onChanged: (value) {
@@ -104,7 +105,7 @@ Widget accoutLoginPage(BuildContext context,WidgetRef ref){
                 GestureDetector(
                   child: SizedBox(
                     height: 42,
-                    width: 120,
+                    width: 140,
                     child: captchaImage.value ?? Placeholder(),
                   ),
                   onTap: () async{

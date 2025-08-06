@@ -15,6 +15,12 @@ import 'package:my_social/store/short_video/short_video_store.dart';
 
 part 'short_video_page.g.dart';
 
+AppBar shortVideoPageAppBar(){ 
+  return AppBar(
+    backgroundColor: Colors.black,
+  );
+}
+
 @hcwidget
 Widget shortVideoPageBody(BuildContext context,WidgetRef ref){
   ShortVideoApi shortVideoApi = ShortVideoApi();
@@ -60,52 +66,56 @@ Widget shortVideoPageBody(BuildContext context,WidgetRef ref){
     };
   },[]);
 
-  return PageView.builder(
-    scrollDirection: Axis.vertical,
-    itemCount: shortVideoStore.videoList.length,
-    itemBuilder: (context, index) {
-      return Stack(
-        children: [
-          Video(
-            controller: videoController,
-            controls: (VideoState state){
-              return SizedBox();
-            },
-          ),
-          
-          Align(
-            alignment: Alignment.centerRight,
-            child: ShortVideoSideBar(
-              videoInfo: shortVideoNotifier.getCurrentVideo(),
+  return Container(
+    color: Colors.black,
+    child: PageView.builder(
+      scrollDirection: Axis.vertical,
+      itemCount: shortVideoStore.videoList.length,
+      itemBuilder: (context, index) {
+        return Stack(
+          children: [
+            Video(
+              fill: Colors.black,
+              controller: videoController,
+              controls: (VideoState state){
+                return SizedBox();
+              },
             ),
-          ),
+            
+            Align(
+              alignment: Alignment.centerRight,
+              child: ShortVideoSideBar(
+                videoInfo: shortVideoNotifier.getCurrentVideo(),
+              ),
+            ),
 
-          Positioned(
-            bottom: 32,
-            left: 16,
-            child: ShortVideoBottomBar(
-              videoInfo: shortVideoNotifier.getCurrentVideo(),
-            )
-          )
-
-        ],
-      );
-    },
-    onPageChanged: (int pageIndex) {
-      // 切换到对应视频并且播放
-      shortVideoNotifier.gotoVideoAt(
-        pageIndex
-      ).then(
-        (ShortVideoInfoResult? videoInfo){
-          if(videoInfo != null){
-            player.open(
-              Media(
-                videoInfo.videoUrl
+            Positioned(
+              bottom: 32,
+              left: 16,
+              child: ShortVideoBottomBar(
+                videoInfo: shortVideoNotifier.getCurrentVideo(),
               )
-            );
+            )
+
+          ],
+        );
+      },
+      onPageChanged: (int pageIndex) {
+        // 切换到对应视频并且播放
+        shortVideoNotifier.gotoVideoAt(
+          pageIndex
+        ).then(
+          (ShortVideoInfoResult? videoInfo){
+            if(videoInfo != null){
+              player.open(
+                Media(
+                  videoInfo.videoUrl
+                )
+              );
+            }
           }
-        }
-      );
-    },
+        );
+      },
+    ),
   );
 }

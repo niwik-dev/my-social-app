@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:my_social/service/pref_service.dart';
 import '../../model/store/login_user.dart';
 import '../../store/login/login_store.dart';
 import '../../utils/base64_utils.dart';
@@ -80,14 +81,19 @@ class AuthApi{
     Response response = await post('$url?username=$username&password=$password');
     if(response.statusCode == 200){
       if(response.data["code"] == "00000"){
-        ref.watch(loginUserStoreProvider.notifier).setLoginUser(
-          LoginUser(
-            username: username,
-            isLoggedIn: true,
-            accessToken: response.data?["data"]["accessToken"],
-            refreshToken: response.data?["data"]["refreshToken"],
-          )
+        LoginUser loginUser = LoginUser(
+          username: username,
+          isLoggedIn: true,
+          accessToken: response.data?["data"]["accessToken"],
+          refreshToken: response.data?["data"]["refreshToken"],
         );
+        // 存入全局状态中
+        var loginUserStoreNotifier = ref.watch(loginUserStoreProvider.notifier);
+        loginUserStoreNotifier.setLoginUser(loginUser);
+
+        // 存入本地存储中
+        PrefService prefService = PrefService();
+        prefService.saveLoginUser(loginUser);
         return true;
       }
     }

@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_social/router/app_router.dart';
+import 'package:my_social/service/pref_service.dart';
 
 import '../store/login/login_store.dart';
 
@@ -62,16 +64,19 @@ class AuthRequestUtils{
     };
     // https://github.com/cfug/dio/issues/2056#issuecomment-1840522128
 
-    // 如果请求响应401，则立即跳转页面
-    // _dio.interceptors.add(InterceptorsWrapper(
-    //   onResponse: (response, handler) {
-    //     if(response.statusCode == 401){
-    //       // 跳转到登录页面
-    //       AppRouterHolder().getRouter().go('/');
-    //     }
-    //     return handler.next(response);
-    //   },
-    // ));
+    PrefService prefService = PrefService();
+
+    // 如果请求响应401，则立即跳转页面，并且清空本地存储
+    _dio.interceptors.add(InterceptorsWrapper(
+      onResponse: (response, handler) {
+        if(response.statusCode == 401){
+          // 跳转到登录页面
+          AppRouterHolder().getRouter().go('/');
+          prefService.clearLoginUser();
+        }
+        return handler.next(response);
+      },
+    ));
     return _dio;
   }
 

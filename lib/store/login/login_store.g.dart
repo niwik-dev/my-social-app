@@ -6,7 +6,7 @@ part of 'login_store.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginUserStoreHash() => r'86a1f8287dbc5183bfe13fc40a953f665d8643c4';
+String _$loginUserStoreHash() => r'61f362679c2942b1fbf852992b5084e119d3b0e1';
 
 /// See also [LoginUserStore].
 @ProviderFor(LoginUserStore)

@@ -6,7 +6,7 @@ part of 'index_page.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class IndexPage extends HookWidget {
+class IndexPage extends HookConsumerWidget {
   const IndexPage(
     this.state, {
     Key? key,
@@ -15,8 +15,13 @@ class IndexPage extends HookWidget {
   final GoRouterState state;
 
   @override
-  Widget build(BuildContext _context) => indexPage(
+  Widget build(
+    BuildContext _context,
+    WidgetRef _ref,
+  ) =>
+      indexPage(
         _context,
+        _ref,
         state,
       );
 }

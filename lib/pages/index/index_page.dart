@@ -4,48 +4,62 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
 import 'package:my_social/components/logo/app_logo.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:my_social/hooks/use_mounted.dart';
+import 'package:my_social/model/store/login_user.dart';
+import 'package:my_social/store/login/login_store.dart';
+
 part 'index_page.g.dart';
 
 
-@hwidget
-Widget indexPage(BuildContext context,GoRouterState state){
+@hcwidget
+Widget indexPage(BuildContext context,WidgetRef ref, GoRouterState state){
+    // 获取登录用户信息
+  useMouted((){
+    var loginUserStoreNotifier = ref.watch(loginUserStoreProvider.notifier);
+    loginUserStoreNotifier.loadFromPerfs()
+    .then((LoginUser? loginUser) {
+      if(loginUser!=null && loginUser.isLoggedIn && loginUser.accessToken != null){
+        context.go('/home');
+      }
+    });
+  });
+
   if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showDialog(
-          barrierDismissible: false,
-          animationStyle: AnimationStyle(
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            reverseCurve: Curves.easeInOut
-          ),
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('提示'),
-              content: const Text('检测到当前为PC平台，正在以兼容模式运行'),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('我已知晓'),
-                  onPressed: () {
-                    context.pop();
-                  }
-                )
-              ]
-            );
-          }
-        );
-      });
-    }, []);
+    useMouted(() {
+      showDialog(
+        barrierDismissible: false,
+        animationStyle: AnimationStyle(
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          reverseCurve: Curves.easeInOut
+        ),
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('提示'),
+            content: const Text('检测到当前为PC平台，正在以兼容模式运行'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('我已知晓'),
+                onPressed: () {
+                  context.pop();
+                }
+              )
+            ]
+          );
+        }
+      );
+    });
   }
 
   var confirmPermit = useState<bool>(false);
 
   // 如果是因为登录状态跳转的，获取到过期路由参数
-  String? expired = state.pathParameters['expired'];
+  String? expired = state.extra as String?;
   if(expired != null){
     // TODO:处理登录过期逻辑
   }

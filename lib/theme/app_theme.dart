@@ -31,6 +31,11 @@ class AppThemeHolder{
           elevation: 0,
           iconTheme: IconThemeData(
             size: 20
+          ),
+          titleTextStyle: TextStyle(
+            fontSize: 18,
+            fontFamily: globalFontFamily,
+            color: Color(0xFF333333),
           )
         ),
 

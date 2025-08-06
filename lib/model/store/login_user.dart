@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class LoginUser{
   String username;
   String? avatarUrl;
@@ -31,5 +33,31 @@ class LoginUser{
       refreshToken: refreshToken ?? this.refreshToken,
       captchaKey: captchaKey ?? this.captchaKey,
     );
+  }
+
+  factory LoginUser.fromJson(Map<String, dynamic> userMap) {
+    return LoginUser(
+      username: userMap['username'] ?? '游客',
+      avatarUrl: userMap['avatarUrl'],
+      isLoggedIn: userMap['isLoggedIn'] ?? false,
+      accessToken: userMap['accessToken'],
+      refreshToken: userMap['refreshToken'],
+      captchaKey: userMap['captchaKey'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'username': username,
+      'avatarUrl': avatarUrl,
+      'isLoggedIn': isLoggedIn,
+      'accessToken': accessToken,
+      'refreshToken': refreshToken,
+      'captchaKey': captchaKey,
+    };
+  }
+
+  String toJsonSting(){
+    return jsonEncode(toJson());
   }
 }

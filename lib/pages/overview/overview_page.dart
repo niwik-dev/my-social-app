@@ -20,20 +20,11 @@ Widget overviewPage(
   }
 ){
   var currentTabIndex = useState<int>(0);
+  var tabRouteItem = tabRoute.items[currentTabIndex.value];
 
   return Scaffold(
-    appBar: AppBar(
-      actionsPadding: EdgeInsets.all(8),
-      actions: [
-        IconButton(
-          onPressed: (){},
-          icon: Badge(
-            child: Icon(MingCuteIcons.mgc_bell_ringing_line),
-          ),
-        )
-      ],
-    ),
-    body: tabRoute.items[currentTabIndex.value].body ?? Center(
+    appBar: tabRouteItem.appBar ?? tabRoute.defaultAppBar,
+    body: tabRouteItem.body ?? Center(
       child: Empty(),
     ),
     bottomNavigationBar: BottomNavigationBar(
@@ -44,6 +35,12 @@ Widget overviewPage(
       onTap: (int index) {
         currentTabIndex.value = index;
       },
+
+      // 主要是针对短视频页面，短视频页面需要暗色底栏
+      selectedItemColor: tabRouteItem.dark == true ? Colors.white: null,
+      unselectedItemColor: tabRouteItem.dark == true ? Colors.white54: null,
+      backgroundColor: tabRouteItem.dark == true?Colors.black:null,
+
       items: tabRoute.items.map((item) {
         return BottomNavigationBarItem(
           icon: item.icon,
