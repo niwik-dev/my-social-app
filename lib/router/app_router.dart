@@ -95,6 +95,7 @@ class AppRouterHolder{
                   DrawerRouteListItem(
                     title: 'AI助手',
                     icon: Icon(MingCuteIcons.mgc_chat_2_line),
+                    path: '/ai-assistant'
                   ),
                   DrawerRouteListGroup(
                     items: [
@@ -115,6 +116,29 @@ class AppRouterHolder{
                     icon: Icon(MingCuteIcons.mgc_leaf_2_line),
                     path: '/comm-conv'
                   )
+                ],
+                action: [
+                  DrawerRouteActionItem(
+                    title: '扫一扫',
+                    icon: Icon(MingCuteIcons.mgc_scan_line),
+                    onTap: () {
+                      context.push('qrcode-scan');
+                    },
+                  ),
+                  DrawerRouteActionItem(
+                    title: '客服咨询',
+                    icon: Icon(MingCuteIcons.mgc_service_line),
+                    onTap: () {
+                      context.push('/customer-service');
+                    },
+                  ),
+                  DrawerRouteActionItem(
+                    title: '设置',
+                    icon: Icon(MingCuteIcons.mgc_settings_3_line),
+                    onTap: () {
+                      context.push('/setting');
+                    },
+                  ),
                 ]
               ),
             ),

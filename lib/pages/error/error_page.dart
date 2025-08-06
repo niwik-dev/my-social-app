@@ -12,9 +12,7 @@ Widget errorPage(BuildContext context){
     appBar: AppBar(
       leading: IconButton(
         icon: Icon(
-          MingCuteIcons.mgc_arrow_left_line,
-          size: 24,
-          color: Colors.black,
+          MingCuteIcons.mgc_left_line,
         ),
         onPressed: (){
           context.pop();

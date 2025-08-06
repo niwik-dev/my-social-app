@@ -69,3 +69,24 @@ Widget drawerListRouteDelegate(
     throw Exception('Invalid drawer route item');
   }
 }
+
+@swidget
+Widget drawerActionRouteDelegate(
+  BuildContext context, IDrawerActionItem item
+){
+  if(item is DrawerRouteActionItem){
+    return Wrap(
+      direction: Axis.vertical,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        IconButton(
+          icon: item.icon,
+          onPressed: item.onTap,
+        ),
+        Text(item.title),
+      ],
+    );
+  }else{
+    throw Exception('Invalid drawer route item');
+  }
+}

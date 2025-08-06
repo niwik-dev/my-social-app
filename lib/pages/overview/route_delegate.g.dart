@@ -20,3 +20,18 @@ class DrawerListRouteDelegate extends StatelessWidget {
         item,
       );
 }
+
+class DrawerActionRouteDelegate extends StatelessWidget {
+  const DrawerActionRouteDelegate(
+    this.item, {
+    Key? key,
+  }) : super(key: key);
+
+  final IDrawerActionItem item;
+
+  @override
+  Widget build(BuildContext _context) => drawerActionRouteDelegate(
+        _context,
+        item,
+      );
+}

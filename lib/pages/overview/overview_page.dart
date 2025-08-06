@@ -68,39 +68,9 @@ Widget overviewPage(
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Wrap(
-                  direction: Axis.vertical,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Icon(MingCuteIcons.mgc_scan_line),
-                      onPressed: () {},
-                    ),
-                    Text('扫一扫')
-                  ],
-                ),
-                Wrap(
-                  direction: Axis.vertical,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Icon(MingCuteIcons.mgc_service_line),
-                      onPressed: () {},
-                    ),
-                    Text('客服咨询')
-                  ],
-                ),
-                Wrap(
-                  direction: Axis.vertical,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Icon(MingCuteIcons.mgc_settings_3_line),
-                      onPressed: () {},
-                    ),
-                    Text('设置')
-                  ],
-                )
+                ...drawerRoute.action.map((item){
+                  return DrawerActionRouteDelegate(item);
+                }),
               ],
             )
           ],
