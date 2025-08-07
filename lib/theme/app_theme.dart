@@ -30,26 +30,32 @@ class AppThemeHolder{
         appBarTheme: AppBarTheme(
           elevation: 0,
           iconTheme: IconThemeData(
-            size: 20
+            size: 22
           ),
           titleTextStyle: TextStyle(
-            fontSize: 18,
+            fontSize: 16,
             fontFamily: globalFontFamily,
             color: Color(0xFF333333),
           )
         ),
+        dropdownMenuTheme: DropdownMenuThemeData(
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(4),
+              borderSide: BorderSide.none
+            ),
+          ),
+        ),
 
         listTileTheme: ListTileThemeData(
-          dense: true,
           contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8)
           ),
-          horizontalTitleGap: 12,
+          horizontalTitleGap: 16,
           titleTextStyle: TextStyle(
-            fontSize: 18,
             fontFamily: globalFontFamily,
-            color: Color(0xFF333333),
+            color: Color(0xFF333333)
           ),
           tileColor: Colors.white,
           selectedTileColor: Colors.white,
@@ -59,6 +65,8 @@ class AppThemeHolder{
         badgeTheme: BadgeThemeData(
           backgroundColor: Colors.redAccent
         ),
+
+        scaffoldBackgroundColor: Color(0xFFF5F5F5),
 
         drawerTheme: DrawerThemeData(
           backgroundColor: Color(0xFFF5F5F5),
@@ -110,6 +118,7 @@ class AppThemeHolder{
               fontSize: 16,
               fontFamily: globalFontFamily
             ),
+            iconColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8)
             )
@@ -142,6 +151,10 @@ class AppThemeHolder{
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8)
+            ),
+            textStyle: TextStyle(
+              fontSize: 16,
+              fontFamily: globalFontFamily
             ),
             splashFactory: NoSplash.splashFactory,
             foregroundColor: Color(0xFF333333),

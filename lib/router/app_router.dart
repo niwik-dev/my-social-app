@@ -94,7 +94,7 @@ class AppRouterHolder{
                 list: [
                   DrawerRouteListItem(
                     title: 'AI助手',
-                    icon: Icon(MingCuteIcons.mgc_chat_2_line),
+                    icon: Icon(MingCuteIcons.mgc_ai_line),
                     path: '/ai-assistant'
                   ),
                   DrawerRouteListGroup(
@@ -158,7 +158,7 @@ class AppRouterHolder{
 
           // 设置页面
           GoRoute(
-            path: '/settings',
+            path: '/setting',
             builder: (context, state) => SettingPage(),
           ),
         ],

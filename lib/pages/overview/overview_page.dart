@@ -50,7 +50,6 @@ Widget overviewPage(
       }).toList(),
     ),
     drawer: Drawer(
-      width: MediaQuery.of(context).size.width * 0.65,
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 8, vertical: 24

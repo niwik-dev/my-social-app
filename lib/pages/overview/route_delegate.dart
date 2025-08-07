@@ -9,9 +9,16 @@ part 'route_delegate.g.dart';
 Widget drawerListRouteDelegate(
   BuildContext context, IDrawerListItem item
 ){
+  final double textSize = 15;
   if(item is DrawerRouteListItem){
     return ListTile(
-      title: Text(item.title),
+      title: Text(
+        item.title,
+        style: TextStyle(
+          fontSize: textSize,
+          color: Color(0xFF333333),
+        ),
+      ),
       leading: item.icon,
       onTap: () {
         if(item.path != null){
@@ -49,7 +56,13 @@ Widget drawerListRouteDelegate(
         }
 
         list.add(ListTile(
-          title: Text(item.title),
+          title: Text(
+            item.title,
+            style: TextStyle(
+              fontSize: textSize,
+              color: Color(0xFF333333),
+            ),
+          ),
           shape: shapeBorder,
           leading: item.icon,
           onTap: () {
@@ -74,6 +87,7 @@ Widget drawerListRouteDelegate(
 Widget drawerActionRouteDelegate(
   BuildContext context, IDrawerActionItem item
 ){
+  final double textSize = 15;
   if(item is DrawerRouteActionItem){
     return Wrap(
       direction: Axis.vertical,
@@ -82,8 +96,14 @@ Widget drawerActionRouteDelegate(
         IconButton(
           icon: item.icon,
           onPressed: item.onTap,
+          iconSize: 28,
         ),
-        Text(item.title),
+        Text(
+          item.title,
+          style: TextStyle(
+            fontSize: textSize,
+          ),
+        ),
       ],
     );
   }else{

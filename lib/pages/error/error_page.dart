@@ -10,14 +10,16 @@ part 'error_page.g.dart';
 Widget errorPage(BuildContext context){
   return Scaffold(
     appBar: AppBar(
-      leading: IconButton(
-        icon: Icon(
+      leadingWidth: 48,
+      leading: GestureDetector(
+        child: Icon(
           MingCuteIcons.mgc_left_line,
         ),
-        onPressed: (){
+        onTap: (){
           context.pop();
         }
       ),
+      titleSpacing: 0,
       title: Text('找不到页面'),
     ),
     body: Center(

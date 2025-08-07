@@ -43,13 +43,14 @@ Widget noteDetailPage(
 
   return Scaffold(
     appBar: AppBar(
-      leading: IconButton(
-        icon: Icon(MingCuteIcons.mgc_left_line),
-        onPressed: () {
+      leading: GestureDetector(
+        child: Icon(MingCuteIcons.mgc_left_line),
+        onTap: () {
           context.pop();
         },
       ),
       titleSpacing: 0,
+      leadingWidth: 45,
       title: Wrap(
         alignment: WrapAlignment.start,
         crossAxisAlignment: WrapCrossAlignment.center,

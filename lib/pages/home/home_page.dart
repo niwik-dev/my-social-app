@@ -110,7 +110,7 @@ Widget homePageBody(BuildContext context,WidgetRef ref){
     slivers: [
       SliverToBoxAdapter(
         child: StaggeredGrid.count(
-          crossAxisCount: 2,
+          crossAxisCount: MediaQuery.of(context).size.width ~/ 160,
           children: [
             for (NoteInfoResult note in noteList.value)
             NoteCard(note: note, onTap: (){

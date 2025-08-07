@@ -6,9 +6,16 @@ part of 'setting_page.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class SettingPage extends StatelessWidget {
+class SettingPage extends ConsumerWidget {
   const SettingPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext _context) => settingPage(_context);
+  Widget build(
+    BuildContext _context,
+    WidgetRef _ref,
+  ) =>
+      settingPage(
+        _context,
+        _ref,
+      );
 }

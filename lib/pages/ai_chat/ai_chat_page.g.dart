@@ -6,7 +6,7 @@ part of 'ai_chat_page.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class AiChatPage extends StatelessWidget {
+class AiChatPage extends HookWidget {
   const AiChatPage({Key? key}) : super(key: key);
 
   @override
