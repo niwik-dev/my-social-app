@@ -2,6 +2,9 @@ import 'dart:convert';
 
 class LoginUser{
   String username;
+  String? nickname;
+  String? mobile;
+  String? email;
   String? avatarUrl;
   bool isLoggedIn;
   String? accessToken;
@@ -9,7 +12,10 @@ class LoginUser{
   String? captchaKey;
 
   LoginUser({
-    this.username = '游客',
+    this.username = 'visitor',
+    this.nickname = '游客',
+    this.mobile = '',
+    this.email = '',
     this.avatarUrl,
     this.isLoggedIn = false,
     this.accessToken,
@@ -19,6 +25,9 @@ class LoginUser{
 
   LoginUser copyWith({
     String? username,
+    String? nickname,
+    String? mobile,
+    String? email,
     String? avatarUrl,
     bool? isLoggedIn,
     String? accessToken,
@@ -27,6 +36,9 @@ class LoginUser{
   }){
     return LoginUser(
       username: username ?? this.username,
+      nickname: nickname ?? this.nickname,
+      mobile: mobile ?? this.mobile,
+      email: email ?? this.email,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       isLoggedIn: isLoggedIn ?? this.isLoggedIn,
       accessToken: accessToken ?? this.accessToken,

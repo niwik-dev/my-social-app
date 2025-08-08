@@ -26,7 +26,7 @@ Widget settingPage(BuildContext context,WidgetRef ref){
           fontSize: 16
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(2),
         )
       ),
       textButtonTheme: TextButtonThemeData(
@@ -57,6 +57,7 @@ Widget settingPage(BuildContext context,WidgetRef ref){
       body: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 16.0,
+          vertical: 16.0
         ),
         child: CustomScrollView(
           slivers: [

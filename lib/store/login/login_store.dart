@@ -33,7 +33,10 @@ class LoginUserStore extends _$LoginUserStore {
   void logout(){
     state = LoginUser(
       isLoggedIn: false,
-      username: '游客',
+      nickname: '游客',
+      email: '',
+      mobile: '',
+      username: 'visitor',
       avatarUrl: null,
       accessToken: null,
       captchaKey: null

@@ -23,7 +23,8 @@ Widget overviewPage(
   var tabRouteItem = tabRoute.items[currentTabIndex.value];
 
   return Scaffold(
-    appBar: tabRouteItem.appBar ?? tabRoute.defaultAppBar,
+    appBar: tabRouteItem.hideAppBar? null: 
+      tabRouteItem.appBar ?? tabRoute.defaultAppBar,
     body: tabRouteItem.body ?? Center(
       child: Empty(),
     ),

@@ -12,6 +12,8 @@ Widget drawerListRouteDelegate(
   final double textSize = 15;
   if(item is DrawerRouteListItem){
     return ListTile(
+      dense: true,
+      style: ListTileStyle.drawer,
       title: Text(
         item.title,
         style: TextStyle(
@@ -55,22 +57,26 @@ Widget drawerListRouteDelegate(
           );
         }
 
-        list.add(ListTile(
-          title: Text(
-            item.title,
-            style: TextStyle(
-              fontSize: textSize,
-              color: Color(0xFF333333),
+        list.add(
+          ListTile(
+            dense: true,
+            style: ListTileStyle.drawer,
+            title: Text(
+              item.title,
+              style: TextStyle(
+                fontSize: textSize,
+                color: Color(0xFF333333),
+              ),
             ),
-          ),
-          shape: shapeBorder,
-          leading: item.icon,
-          onTap: () {
-            if(item.path != null){
-              context.push(item.path!);
-            }
-          },
-        ));
+            shape: shapeBorder,
+            leading: item.icon,
+            onTap: () {
+              if(item.path != null){
+                context.push(item.path!);
+              }
+            },
+          )
+        );
       }
       return list;
     }

@@ -24,7 +24,7 @@ class AppThemeHolder{
         cardTheme: CardThemeData(
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(2.0)
+            borderRadius: BorderRadius.circular(16.0)
           )
         ),
         appBarTheme: AppBarTheme(

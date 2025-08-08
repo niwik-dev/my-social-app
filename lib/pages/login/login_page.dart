@@ -7,6 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
 import 'package:my_social/api/restful/auth_api.dart';
+import 'package:my_social/api/restful/user_api.dart';
 part 'login_page.g.dart';
 
 @hcwidget
@@ -18,6 +19,7 @@ Widget accoutLoginPage(BuildContext context,WidgetRef ref){
   var rememberPassword = useState<bool>(false);
 
   AuthApi authApi = AuthApi();
+  UserApi userApi = UserApi();
 
   useEffect((){
     authApi.fetchCaptcha(ref).then((Image image) { 
@@ -141,12 +143,14 @@ Widget accoutLoginPage(BuildContext context,WidgetRef ref){
               child: FilledButton(
                 child: Text('登录'),
                 onPressed: () async {
-                  bool success = await AuthApi().login(
+                  bool success = await authApi.login(
                     ref,
                     username: username.value,
                     password: password.value,
                     captcha: captcha.value,
                   );
+                  userApi.updateCurrnentUser(ref);
+                  
                   if(success){
                     context.go('/home');
                   }else{

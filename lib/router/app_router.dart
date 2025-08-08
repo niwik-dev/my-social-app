@@ -13,6 +13,7 @@ import 'package:my_social/pages/overview/overview_page.dart';
 import 'package:my_social/pages/index/index_page.dart';
 import 'package:my_social/pages/login/login_page.dart';
 import 'package:my_social/pages/overview/tab_route.dart';
+import 'package:my_social/pages/person/person_page.dart';
 import 'package:my_social/pages/setting/setting_page.dart';
 import 'package:my_social/pages/short_video/short_video_page.dart';
 import 'package:my_social/store/login/login_store.dart';
@@ -85,6 +86,9 @@ class AppRouterHolder{
                   TabRouteItem(
                     tabName: '我的',
                     icon: Icon(MingCuteIcons.mgc_user_2_line),
+                    body: PersonPageBody(),
+                    // 取消默认的appBar
+                    hideAppBar: true,
                     activeIcon: Icon(MingCuteIcons.mgc_user_2_fill),
                   ),
                 ],

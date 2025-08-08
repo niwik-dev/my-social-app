@@ -10,6 +10,7 @@ class TabRouteItem{
   Widget activeIcon;
   Widget? body;
   AppBar? appBar;
+  bool hideAppBar;
 
   // 页面例如短视频需要底部栏为暗色
   bool? dark;
@@ -20,7 +21,8 @@ class TabRouteItem{
     required this.activeIcon,
     this.body,
     this.appBar,
-    this.dark
+    this.hideAppBar = false,
+    this.dark,
   });
 }
 
