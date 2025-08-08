@@ -19,7 +19,7 @@ part 'person_page.g.dart';
 class PersonPageHeaderDelegate extends SliverPersistentHeaderDelegate {
   String? imageUrl;
   LoginUser? loginUser;
-  final double cardHeight = 120;
+  final double cardHeight = 100;
 
   PersonPageHeaderDelegate({
     required this.imageUrl,
@@ -108,13 +108,14 @@ class PersonPageHeaderDelegate extends SliverPersistentHeaderDelegate {
                         Text(
                           loginUser!.nickname!,
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                           )
                         ),
+                        Gap(8),
                         Text(
                           '@${loginUser!.username}',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: Color(0xFF999999)
                           )
                         ),
@@ -138,7 +139,7 @@ class PersonPageHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 300.0;
+  double get maxExtent => 200.0;
 
   @override
   double get minExtent => 150.0;
@@ -162,7 +163,7 @@ Widget statistics(BuildContext context,{
     children: [
       Icon(
         icon,
-        size: 32.0,
+        size: 28.0,
       ),
       Wrap(
         spacing: 8,
@@ -170,13 +171,13 @@ Widget statistics(BuildContext context,{
           Text(
             label,
             style: TextStyle(
-              fontSize: 16.0,
+              fontSize: 13.0,
             ),
           ),
           Text(
             '$value',
             style: TextStyle(
-              fontSize: 16.0,
+              fontSize: 13.0,
             ),
           )
         ],
@@ -209,6 +210,9 @@ Widget personPageBody(BuildContext context,WidgetRef ref){
       listTileTheme: theme.listTileTheme.copyWith(
         titleTextStyle: theme.listTileTheme.titleTextStyle?.copyWith(
           fontSize: 16.0
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2.0)
         )
       ),
     ),
@@ -230,7 +234,7 @@ Widget personPageBody(BuildContext context,WidgetRef ref){
             ),
             sliver: SliverToBoxAdapter(
               child: SizedBox(
-                height: 100,
+                height: 80,
                 child: Card(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -265,24 +269,32 @@ Widget personPageBody(BuildContext context,WidgetRef ref){
             sliver: SliverList.list(
               children: [
                 ListTile(
+                  style: ListTileStyle.list,
+                  dense: true,
                   leading: Icon(MingCuteIcons.mgc_photo_album_2_line),
                   trailing: Icon(MingCuteIcons.mgc_right_line),
                   title: Text('相册'),
                   onTap: (){},
                 ),
                 ListTile(
+                  style: ListTileStyle.list,
+                  dense: true,
                   leading: Icon(MingCuteIcons.mgc_camera_2_line),
                   trailing: Icon(MingCuteIcons.mgc_right_line),
                   title: Text('动态'),
                   onTap: (){},
                 ),
                 ListTile(
+                  style: ListTileStyle.list,
+                  dense: true,
                   leading: Icon(MingCuteIcons.mgc_star_line),
                   trailing: Icon(MingCuteIcons.mgc_right_line),
                   title: Text('收藏'),
                   onTap: (){},
                 ),
                 ListTile(
+                  style: ListTileStyle.list,
+                  dense: true,
                   leading: Icon(MingCuteIcons.mgc_folder_line),
                   trailing: Icon(MingCuteIcons.mgc_right_line),
                   title: Text('文件'),

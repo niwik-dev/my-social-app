@@ -93,7 +93,7 @@ Widget drawerListRouteDelegate(
 Widget drawerActionRouteDelegate(
   BuildContext context, IDrawerActionItem item
 ){
-  final double textSize = 15;
+  final double textSize = 14;
   if(item is DrawerRouteActionItem){
     return Wrap(
       direction: Axis.vertical,

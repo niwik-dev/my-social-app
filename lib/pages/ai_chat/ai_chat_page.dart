@@ -118,13 +118,18 @@ Widget aiChatPage(BuildContext context) {
             ),
             Gap(8),
             ListTile(
-              leading: Icon(MingCuteIcons.mgc_bookmark_line),
+              style: ListTileStyle.list,
+              dense: true,
+              leading: Icon(
+                MingCuteIcons.mgc_bookmark_line,
+                size: 18,
+              ),
               trailing: Icon(MingCuteIcons.mgc_right_line),
               title: Text(
                 '我的收藏',
                 style: TextStyle(
                   fontSize: 16,
-                ),
+                )
               ),
               onTap: () {
                 

@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:ming_cute_icons/ming_cute_icons.dart';
 import 'package:my_social/api/restful/short_video_api.dart';
 import 'package:my_social/model/common/page_response.dart';
 import 'package:my_social/model/response/short_video_info_result.dart';
@@ -18,6 +19,20 @@ part 'short_video_page.g.dart';
 AppBar shortVideoPageAppBar(){ 
   return AppBar(
     backgroundColor: Colors.black,
+    leading: Builder(
+      builder: (BuildContext context) {
+        return IconButton(
+          icon: const Icon(
+            MingCuteIcons.mgc_menu_line,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+          tooltip: '打开左侧抽屉栏',
+        );
+      },
+    ),
   );
 }
 
