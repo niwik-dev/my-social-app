@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
 import 'package:my_social/api/restful/bing_api.dart';
 import 'package:my_social/api/restful/user_api.dart';
-import 'package:my_social/hooks/use_mounted.dart';
 import 'package:my_social/model/store/login_user.dart';
-import 'package:my_social/store/login/login_store.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_social/theme/app_theme.dart';
 
 part 'person_page.g.dart';
@@ -98,20 +94,26 @@ class PersonPageHeaderDelegate extends SliverPersistentHeaderDelegate {
                   children: [
                     CircleAvatar(
                       backgroundImage: NetworkImage(loginUser!.avatarUrl!),
-                      radius: 42,
+                      radius: 32,
                     ),
                     Gap(16),
                     Column(
+                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          loginUser!.nickname!,
-                          style: TextStyle(
-                            fontSize: 18,
-                          )
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width - 185,
+                          child: Text(
+                            maxLines: 2,
+                            loginUser!.nickname!,
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                            overflow: TextOverflow.fade,
+                          ),
                         ),
-                        Gap(8),
+                        Gap(2),
                         Text(
                           '@${loginUser!.username}',
                           style: TextStyle(
@@ -200,6 +202,7 @@ Widget personPageBody(BuildContext context,WidgetRef ref){
     bingApi.getBingImage().then((value) {
       imageUrl.value = value;
     });
+    return () {};
   },[]);
 
   AppThemeHolder themeHolder = AppThemeHolder();

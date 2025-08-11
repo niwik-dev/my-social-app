@@ -26,6 +26,10 @@ class LoginUserStore extends _$LoginUserStore {
     return loginUser;
   }
 
+  LoginUser getLoginUser(){
+    return state;
+  }
+
   void setLoginUser(LoginUser user){
     state = user;
   }

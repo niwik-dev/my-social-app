@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
+import 'package:my_social/model/response/captch_result.dart';
+import 'package:my_social/model/common/data_result.dart';
 import 'package:my_social/service/pref_service.dart';
 import '../../model/store/login_user.dart';
 import '../../store/login/login_store.dart';
@@ -52,17 +53,16 @@ class AuthApi{
     return response;
   }
 
-  Future<Image> fetchCaptcha(WidgetRef ref) async{
+  Future<CaptchaResult> fetchCaptcha(WidgetRef ref) async{
     String url = "/api/v1/auth/captcha";
     Response response = await get(url);
     String base64 = response.data["data"]["captchaBase64"];
+    String key = response.data["data"]["captchaKey"];
 
-    ref.watch(loginUserStoreProvider.notifier).setLoginUser(
-      LoginUser(
-        captchaKey: response.data["data"]["captchaKey"],
-      )
+    return CaptchaResult(
+      captchImage: Base64Utils.base64ToImage(base64),
+      captchaKey: key
     );
-    return Base64Utils.base64ToImage(base64);
   }
 
   Future<void> sendSmsCode(String phone) async{
@@ -70,15 +70,18 @@ class AuthApi{
     await post(url);
   }
 
-  Future<bool> login(
+  Future<DataResult> login(
     WidgetRef ref,
     {
     required String username,
     required String password,
+    required String captchaKey,
     required String captcha
   }) async{
     String url = "/api/v1/auth/login";
-    Response response = await post('$url?username=$username&password=$password');
+    Response response = await post(
+      '$url?username=$username&password=$password&captchaKey=$captchaKey&captcha=$captcha'
+    );
     if(response.statusCode == 200){
       if(response.data["code"] == "00000"){
         LoginUser loginUser = LoginUser(
@@ -94,9 +97,16 @@ class AuthApi{
         // 存入本地存储中
         PrefService prefService = PrefService();
         prefService.saveLoginUser(loginUser);
-        return true;
+
+        DataResult loginResult = DataResult.fromResponse(
+          response: response
+        );
+        return loginResult;
       }
     }
-    return false;
+    DataResult loginResult = DataResult.fromResponse(
+      response: response
+    );
+    return loginResult;
   }
 }

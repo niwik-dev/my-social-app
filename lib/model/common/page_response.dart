@@ -1,5 +1,4 @@
-import 'package:my_social/model/response/base_result.dart';
-import 'package:my_social/model/response/note_info_result.dart';
+import 'package:my_social/model/common/base_result.dart';
 
 class PageResponse<T extends BaseResult> { 
   int pages;
@@ -29,7 +28,7 @@ class PageResponse<T extends BaseResult> {
     "current": current,
     "size": size,
     "total": total,
-    "data": list == null ? [] : List<dynamic>.from(list!.map((x) => x.toJson())),
+    "data": list == null ? [] : List<dynamic>.from(list.map((x) => x.toJson())),
   };
 }
 

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:gap/gap.dart';
-import 'package:ming_cute_icons/ming_cute_icons.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:my_social/components/empty/empty.dart';
 import 'package:my_social/pages/overview/drawer_route.dart';

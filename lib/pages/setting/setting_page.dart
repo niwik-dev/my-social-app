@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
 import 'package:my_social/model/store/login_user.dart';
-import 'package:my_social/router/app_router.dart';
 import 'package:my_social/service/pref_service.dart';
 import 'package:my_social/store/login/login_store.dart';
 import 'package:my_social/theme/app_theme.dart';

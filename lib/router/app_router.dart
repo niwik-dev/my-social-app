@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
-import 'package:my_social/model/store/login_user.dart';
 import 'package:my_social/pages/ai_chat/ai_chat_page.dart';
 import 'package:my_social/pages/common/default_app_bar.dart';
 import 'package:my_social/pages/error/error_page.dart';
 import 'package:my_social/pages/home/home_page.dart';
+import 'package:my_social/pages/login/phone_login_page.dart';
 import 'package:my_social/pages/note/note_detail_page.dart';
 import 'package:my_social/pages/overview/drawer_route.dart';
 import 'package:my_social/pages/overview/overview_page.dart';
 import 'package:my_social/pages/index/index_page.dart';
-import 'package:my_social/pages/login/login_page.dart';
+import 'package:my_social/pages/login/account_login_page.dart';
 import 'package:my_social/pages/overview/tab_route.dart';
 import 'package:my_social/pages/person/person_page.dart';
+import 'package:my_social/pages/register/social_info_register_page.dart';
+import 'package:my_social/pages/register/account_register_page.dart';
 import 'package:my_social/pages/setting/setting_page.dart';
 import 'package:my_social/pages/short_video/short_video_page.dart';
-import 'package:my_social/store/login/login_store.dart';
 
 class AppRouterHolder{
   // 单例模式
@@ -53,8 +53,15 @@ class AppRouterHolder{
           ),
           // 注册
           GoRoute(
-            path: '/register',
-            builder: (context, state) => Placeholder(),
+            path: '/account-register',
+            builder: (context, state) => AccountRegisterPage(),
+          ),
+          // 注册-社交信息
+          GoRoute(
+            path: '/social-info-register',
+            builder: (context, state) => SocialInfoRegisterPage(
+              state
+            ),
           ),
 
           // 主页

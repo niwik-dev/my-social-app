@@ -1,6 +1,4 @@
-import 'dart:ffi';
-
-import 'package:my_social/model/response/base_result.dart';
+import 'package:my_social/model/common/base_result.dart';
 
 class ShortVideoInfoResult extends BaseResult {
   // 视频ID
