@@ -16,7 +16,7 @@ class AuthApi{
   AuthApi._internal();
 
   // 登录接口地址
-  static const String baseUrl = "http://127.0.0.1:8989";
+  static const String baseUrl = "http://117.50.162.112:8989";
 
   static bool isClientInitialized = false;
   static late Dio httpClient;

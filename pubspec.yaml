@@ -34,8 +34,14 @@ dependencies:
   # Dio： Flutter目前最主流的，基于HttpClient的Http请求库
   dio: ^5.8.0+1
 
+  # UUID：生成UUID
+  uuid: ^4.5.1
+
   # Shared Preferences：本地存储键值对
   shared_preferences: ^2.5.3
+
+  # GPT Markdown渲染
+  gpt_markdown: ^1.0.10
 
   # WindowManager：窗口管理库，提供无边框更定制化的窗口效果
   window_manager: ^0.4.2

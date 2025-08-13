@@ -1,16 +1,182 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
+import 'package:my_social/api/restful/auth_api.dart';
+import 'package:my_social/api/restful/user_api.dart';
+import 'package:my_social/model/store/ai_chat_sessions.dart';
+import 'package:my_social/model/store/login_user.dart';
+import 'package:my_social/model/view/session_prompt.dart';
+import 'package:my_social/pages/ai_chat/ai_chat_header.dart';
+import 'package:my_social/pages/ai_chat/chat_bubble.dart';
+import 'package:my_social/pages/ai_chat/chat_topic_box.dart';
+import 'package:my_social/service/ai_chat_service.dart';
+import 'package:my_social/store/ai_chat/ai_chat_store.dart';
+import 'package:my_social/store/login/login_store.dart';
 
 part 'ai_chat_page.g.dart';
 
-@hwidget
-Widget aiChatPage(BuildContext context) { 
+@swidget
+Widget welcomeAiSubPage(BuildContext context) { 
+
+  return Align(
+    alignment: Alignment(0,-0.6),
+    child: Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      direction: Axis.vertical,
+      alignment: WrapAlignment.center,
+      children: [
+        Text(
+          'Hi，很高兴见到你',
+          style: TextStyle(
+            fontSize: 25,
+          )
+        ),
+        SizedBox(
+          width: 300,
+          child: Text(
+            '我可以帮你创作各种创意，请把任务交给我吧~',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: Colors.black26
+            ),
+            textAlign: TextAlign.center,
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+@hcwidget
+Widget aiChatPage(BuildContext context,WidgetRef ref) { 
   GlobalKey<ScaffoldState> scaffoldKey = useMemoized(() => GlobalKey<ScaffoldState>());
   
+  AiChatService aiChatService = AiChatService();
+
+  var inputContent = useState<String>("");
+  var isDeepThink = useState<bool>(false);
+  var isInternetSearch = useState<bool>(false);
+  var currentSession = useState<AiChatSession?>(null);
+  var isChatProcessing = useState<bool>(false);
+  var canGotoTop = useState<bool>(false);
+  var chatTopcis = useState<AiChatTopics>(
+    AiChatTopics(
+      topics: [
+        AiChatPrompt(name: '图像处理', prompt: 'Photoshop高效操作指南'),
+        AiChatPrompt(name: '功课辅导', prompt: '万有引力公式是怎么得出的？'),
+        AiChatPrompt(name: '副业思路', prompt: '如何利用闲暇时间提高收入？'),
+      ]
+    )
+  );
+
+  var scrollController = useScrollController();
+  var textEditController = useTextEditingController();
+
+  var aiChatHistoryNotifier = ref.watch(aiChatHistoryStoreProvider.notifier);
+  var loginUser = useState<LoginUser>(LoginUser());
+
+  useEffect((){
+    UserApi().getCurrnentUser(ref)
+    .then((user) {
+      if(user!=null){
+        loginUser.value = user;
+      }
+    });
+
+    listener(){
+      if(scrollController.hasClients){
+        scrollController.jumpTo(
+          scrollController.position.maxScrollExtent,
+        );
+
+        if(scrollController.initialScrollOffset > 80){
+          canGotoTop.value = true;
+        }else{
+          canGotoTop.value = false;
+        }
+      }
+    }
+    currentSession.addListener(listener);
+    return () => currentSession.removeListener(listener);
+  },[]);
+
+  Future<void> haveNewChat({
+    required String content, bool newSession=false
+  }) async {
+    if(isChatProcessing.value){
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('请等待当前会话结束'),
+          duration: Duration(seconds: 1),
+        )
+      );
+      return;
+    }
+
+    if(newSession) currentSession.value = null;
+
+    bool isNewSession;
+    AiChatSession session;
+    if(currentSession.value == null){
+      isNewSession = true;
+      // 新增空会话
+      session = AiChatSession(
+        title: '新对话',
+        messages: []
+      );
+    }else{
+      isNewSession = false;
+      session = currentSession.value!;
+    }
+
+    session.addMessages([
+      AiChatMessage(
+          content: content,
+          role: 'user',
+      ),
+      AiChatMessage(
+          content: '',
+          role: 'assistant',
+      )
+    ]);
+    aiChatHistoryNotifier.saveSession(session);
+    currentSession.value = session.copy();
+
+    aiChatService.makeNewChat(
+      ref,
+      session: session,
+      content: inputContent.value,
+      isDeepThink: isDeepThink.value,
+      isInternetSearch: isInternetSearch.value,
+      onProcess: (session){
+        isChatProcessing.value = true;
+        currentSession.value = session;
+      },
+      onFinished: () {
+        isChatProcessing.value = false;
+      },
+    );
+
+    // 生成会话标题内容
+    if(isNewSession){
+      aiChatService.renameNewChat(
+        ref,
+        session: session,
+        content: content
+      );
+    }
+
+    chatTopcis.value = await aiChatService.generatePrompt(
+      ref, session
+    );
+  };
+
   return Scaffold(
     key: scaffoldKey,
     appBar: AppBar(
@@ -112,7 +278,8 @@ Widget aiChatPage(BuildContext context) {
                   '新建聊天',
                 ),
                 onPressed: () {
-                  
+                  currentSession.value = null;
+                  scaffoldKey.currentState?.closeDrawer();
                 },
               ),
             ),
@@ -140,7 +307,67 @@ Widget aiChatPage(BuildContext context) {
             ),
             ListView(
               shrinkWrap: true,
-              children: [],
+              children: [
+                ...aiChatHistoryNotifier.getSessions().map(
+                  (AiChatSession session){
+                    return ListTile(
+                      dense: true,
+                      leading: Icon(
+                        MingCuteIcons.mgc_chat_1_line,
+                        size: 18,
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(
+                          MingCuteIcons.mgc_delete_3_line,
+                          size: 18,
+                        ),
+                        onPressed: (){
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: Text('操作'),
+                              content: Text('是否删除该会话？'),
+                              actions: [
+                                OutlinedButton(
+                                  child: Text('取消'),
+                                  onPressed: (){
+                                    context.pop();
+                                  }
+                                ),
+                                FilledButton(
+                                  child: Text('确定'),
+                                  onPressed: (){
+                                    aiChatHistoryNotifier.removeSession(session);
+                                    if(currentSession.value!=null && currentSession.value!.uuid == session.uuid){
+                                      currentSession.value = null;
+                                    }
+                                    context.pop();
+                                  }
+                                ),
+
+                              ]
+                            )
+                          );
+                        }
+                      ),
+                      title: Text(
+                        session.title,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      onTap: () {
+                        currentSession.value = aiChatHistoryNotifier.getSession(
+                          session.uuid
+                        );
+                        scaffoldKey.currentState?.closeDrawer();
+                      },
+                    );
+                  }
+                )
+              ],
             ),
             Spacer(),
             Divider(
@@ -148,12 +375,19 @@ Widget aiChatPage(BuildContext context) {
             ),
             Row(
               children: [
-                CircleAvatar(
-                  radius: 16,
+                ClipOval(
+                  child: SizedBox(
+                    width: 36,
+                    height: 36,
+                    child: loginUser.value.avatarUrl!=null?
+                    Image.network(
+                      loginUser.value.avatarUrl!,
+                    ): Icon(MingCuteIcons.mgc_user_3_fill),
+                  ),
                 ),
                 Gap(8),
                 Text(
-                  '游客用户',
+                  loginUser.value.nickname!,
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -172,6 +406,7 @@ Widget aiChatPage(BuildContext context) {
                     child: Icon(MingCuteIcons.mgc_notification_line),
                   ),
                   onPressed: () {
+                    
                   },
                 ),
               ],
@@ -182,33 +417,41 @@ Widget aiChatPage(BuildContext context) {
     ),
     body: Stack(
       children: [
-        Align(
-          alignment: Alignment(0,-0.6),
-          child: Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            direction: Axis.vertical,
-            alignment: WrapAlignment.center,
-            children: [
-              Text(
-                'Hi，很高兴见到你',
-                style: TextStyle(
-                  fontSize: 25,
-                )
+        currentSession.value == null? WelcomeAiSubPage():
+        CustomScrollView(
+          controller: scrollController,
+          slivers: [
+            SliverPersistentHeader(
+              floating: true,
+              delegate: ChatHistoryHeaderBarDelegate(
+                title: currentSession.value!.title,
               ),
-              SizedBox(
-                width: 300,
-                child: Text(
-                  '我可以帮你创作各种创意，请把任务交给我吧~',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black26
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 24,
+                child: Center(
+                  child: Text(
+                    'ai生成内容仅供参考',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12.0,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+            for(var message in currentSession.value!.messages)
+              SliverToBoxAdapter(
+                child: ChatBubble(
+                  text: (message.content).trim(),
+                  isUser: message.role == 'user',
+                ),
+              ),
+            SliverPadding(
+              padding: const EdgeInsets.only(bottom: 200),
+            )
+          ],
         ),
 
         Align(
@@ -220,26 +463,62 @@ Widget aiChatPage(BuildContext context) {
             ),
             child: Stack(
               children: [
-                TextField(
-                  decoration: InputDecoration(
-                    hint: Text('向 Ai助手 发送消息'),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 0.5,
-                        color: Colors.black26
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if(!isChatProcessing.value)
+                    SizedBox(
+                      height: 64,
+                      width: double.infinity,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          for(AiChatPrompt topic in chatTopcis.value.topics)
+                          Padding(
+                            padding: EdgeInsets.only(right: 8),
+                            child: ChatTopicBox(
+                              title: topic.name,
+                              subtitle: topic.prompt,
+                              onTap: () {
+                                haveNewChat(content: topic.prompt);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                      borderRadius: BorderRadius.circular(24),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 0.5,
-                        color: Colors.black54
+                    Gap(8),
+                    TextField(
+                      controller: textEditController,
+                      enabled: !isChatProcessing.value,
+                      onChanged: (value) {
+                        inputContent.value = value;
+                      },
+                      style: const TextStyle(
+                        fontSize: 15
                       ),
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                  ),
-                  maxLines: 3,
+                      decoration: InputDecoration(
+                        hint: Text('向 Ai助手 发送消息'),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 0.5,
+                            color: Colors.black26
+                          ),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 0.5,
+                            color: Colors.black54
+                          ),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                      ),
+                      maxLines: 3,
+                    )
+                  ],
                 ),
+
                 Positioned(
                   left: 12,
                   bottom: 12,
@@ -248,6 +527,12 @@ Widget aiChatPage(BuildContext context) {
                     children: [
                       OutlinedButton.icon(
                         style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            isDeepThink.value?Colors.black87:Colors.white,
+                          ),
+                          foregroundColor: WidgetStatePropertyAll(
+                            isDeepThink.value?Colors.white:Colors.black87,
+                          ),
                           shape: WidgetStatePropertyAll(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
@@ -265,10 +550,18 @@ Widget aiChatPage(BuildContext context) {
                         ),
                         label: Text('深度思考'),
                         icon: Icon(MingCuteIcons.mgc_lightning_line),
-                        onPressed: () {  },
+                        onPressed: () {
+                          isDeepThink.value = !isDeepThink.value;
+                        },
                       ),
                       OutlinedButton.icon(
                         style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            isInternetSearch.value?Colors.black87:Colors.white,
+                          ),
+                          foregroundColor: WidgetStatePropertyAll(
+                            isInternetSearch.value?Colors.white:Colors.black87,
+                          ),
                           shape: WidgetStatePropertyAll(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16)
@@ -286,7 +579,9 @@ Widget aiChatPage(BuildContext context) {
                         ),
                         label: Text('联网搜索'),
                         icon: Icon(MingCuteIcons.mgc_earth_2_line),
-                        onPressed: () {  },
+                        onPressed: () {
+                          isInternetSearch.value = !isInternetSearch.value;
+                        },
                       )
                     ],
                   ),
@@ -315,8 +610,14 @@ Widget aiChatPage(BuildContext context) {
                         width: 30,
                         height: 30,
                         child: IconButton.filled(
-                          onPressed: () {},
+                          onPressed: () {
+                            // 清空输入框
+                            textEditController.clear();
+                            haveNewChat(content: inputContent.value);
+                          },
                           icon: Icon(
+                            isChatProcessing.value?
+                            MingCuteIcons.mgc_stop_fill:
                             MingCuteIcons.mgc_send_fill,
                             color: Colors.white,
                           ),
