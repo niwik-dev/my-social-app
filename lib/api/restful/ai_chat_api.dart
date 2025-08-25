@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../model/request/chat_completions_body.dart';
 import '../../model/response/chat_completions_result.dart';
@@ -81,7 +82,8 @@ class AiChatApi {
   Future<void> getChatCompletionsStream({
     required ChatCompletionsBody body,
     required Function(ChatCompletionsStreamResult) onReceive,
-    Function()? onFinished
+    Function()? onFinished,
+    ValueNotifier<bool>? enableNotifier
   }) async {
     body.stream = true;
     final response = await postStream("/v1/chat/completions", data: body.toJson());
@@ -99,10 +101,11 @@ class AiChatApi {
           .transform(const Utf8Decoder())
           .transform(const LineSplitter())
       ){
+        if(enableNotifier!=null && enableNotifier.value == false){
+          break;
+        }
+
         if(line.startsWith("data: [DONE]")){
-          if(onFinished != null){
-            onFinished();
-          }
           break;
         }
         if(line.startsWith("data: ")){
@@ -110,6 +113,10 @@ class AiChatApi {
           ChatCompletionsStreamResult result = ChatCompletionsStreamResult.fromJson(jsonDecode(line));
           onReceive(result);
         }
+      }
+
+      if(onFinished!=null){
+        onFinished();
       }
     }
   }

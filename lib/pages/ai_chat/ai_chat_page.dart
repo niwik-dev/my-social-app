@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
@@ -77,6 +78,7 @@ Widget aiChatPage(BuildContext context,WidgetRef ref) {
 
   var scrollController = useScrollController();
   var textEditController = useTextEditingController();
+  var allowChatProcess = useState<bool>(true);
 
   var aiChatHistoryNotifier = ref.watch(aiChatHistoryStoreProvider.notifier);
   var loginUser = useState<LoginUser>(LoginUser());
@@ -160,7 +162,9 @@ Widget aiChatPage(BuildContext context,WidgetRef ref) {
       },
       onFinished: () {
         isChatProcessing.value = false;
+        allowChatProcess.value = true;
       },
+      enableNotifier: allowChatProcess
     );
 
     // 生成会话标题内容
@@ -612,8 +616,12 @@ Widget aiChatPage(BuildContext context,WidgetRef ref) {
                         child: IconButton.filled(
                           onPressed: () {
                             // 清空输入框
-                            textEditController.clear();
-                            haveNewChat(content: inputContent.value);
+                            if(!isChatProcessing.value){
+                              textEditController.clear();
+                              haveNewChat(content: inputContent.value);
+                            }else{
+                              allowChatProcess.value = false;
+                            }
                           },
                           icon: Icon(
                             isChatProcessing.value?

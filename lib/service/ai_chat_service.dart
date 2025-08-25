@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_social/api/restful/ai_chat_api.dart';
 import 'package:my_social/model/request/chat_completions_body.dart';
@@ -25,12 +26,14 @@ class AiChatService {
       required bool isDeepThink,
       required bool isInternetSearch,
       Function(AiChatSession)? onProcess,
-      Function()? onFinished
+      Function()? onFinished,
+      ValueNotifier<bool>? enableNotifier
     }
   ) async {
     bool isContentFected = false;
     var aiChatHistoryNotifier = ref.read(aiChatHistoryStoreProvider.notifier);
     aiChatApi.getChatCompletionsStream(
+      enableNotifier: enableNotifier,
       body: ChatCompletionsBody(
         model: isDeepThink?"deepseek-ai/DeepSeek-R1-Distill-Qwen-32B":"deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
         messages: [

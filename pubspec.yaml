@@ -30,7 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+
+  # 更好用的异步库
+  async: ^2.13.0
+
   # Dio： Flutter目前最主流的，基于HttpClient的Http请求库
   dio: ^5.8.0+1
 
