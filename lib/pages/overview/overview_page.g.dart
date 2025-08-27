@@ -18,9 +18,6 @@ class OverviewPage extends HookWidget {
   final DrawerRoute drawerRoute;
 
   @override
-  Widget build(BuildContext _context) => overviewPage(
-        _context,
-        tabRoute: tabRoute,
-        drawerRoute: drawerRoute,
-      );
+  Widget build(BuildContext _context) =>
+      overviewPage(_context, tabRoute: tabRoute, drawerRoute: drawerRoute);
 }

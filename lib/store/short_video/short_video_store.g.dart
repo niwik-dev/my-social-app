@@ -12,14 +12,14 @@ String _$shortVideoStoreHash() => r'9a49a4a5e5f768dd1c30b74862ba67205350c829';
 @ProviderFor(ShortVideoStore)
 final shortVideoStoreProvider =
     AutoDisposeNotifierProvider<ShortVideoStore, ShortVideoList>.internal(
-  ShortVideoStore.new,
-  name: r'shortVideoStoreProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$shortVideoStoreHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ShortVideoStore.new,
+      name: r'shortVideoStoreProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$shortVideoStoreHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ShortVideoStore = AutoDisposeNotifier<ShortVideoList>;
 // ignore_for_file: type=lint

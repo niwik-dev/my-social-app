@@ -15,7 +15,8 @@ Widget chatTopicBox(BuildContext context,
     onTap: onTap,
     child: Container(
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: Theme.of(context).brightness == Brightness.light?
+        Colors.grey[200]: Colors.grey[800],
         borderRadius: BorderRadius.circular(8),
       ),
       padding: const EdgeInsets.symmetric(
@@ -28,17 +29,19 @@ Widget chatTopicBox(BuildContext context,
         children: [
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: Colors.black87
+              color: Theme.of(context).brightness == Brightness.light?
+               Colors.black87: Colors.white,
             ),
           ),
           Text(
             subtitle,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
-              color: Colors.black54
+              color: Theme.of(context).brightness == Brightness.light?
+               Colors.black87: Colors.white,
             ),
           )
         ],

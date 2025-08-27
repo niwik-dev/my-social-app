@@ -10,12 +10,6 @@ class SettingPage extends ConsumerWidget {
   const SettingPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(
-    BuildContext _context,
-    WidgetRef _ref,
-  ) =>
-      settingPage(
-        _context,
-        _ref,
-      );
+  Widget build(BuildContext _context, WidgetRef _ref) =>
+      settingPage(_context, _ref);
 }

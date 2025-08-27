@@ -13,6 +13,20 @@ class NoteInfoResult extends BaseResult {
     String userAvatar;
     // 描述
     String descr;
+    // 点赞数
+    int likedCount;
+    // 评论数
+    int commentsCount;
+    // 收藏数
+    int collectedCount;
+    // 浏览数
+    int viewCount;
+    // 分享数
+    int sharedCount;
+    // IP地址
+    String ipLocation;
+    // 图片列表
+    List<String> imagesList;
     // 创建时间
     String? createTime;
 
@@ -23,6 +37,13 @@ class NoteInfoResult extends BaseResult {
         required this.userName,
         required this.userAvatar,
         required this.descr,
+        required this.likedCount,
+        required this.commentsCount,
+        required this.collectedCount,
+        required this.viewCount,
+        required this.sharedCount,
+        required this.ipLocation,
+        required this.imagesList,
         required this.createTime,
     });
 
@@ -33,6 +54,13 @@ class NoteInfoResult extends BaseResult {
         userName: '',
         userAvatar: '',
         descr: '',
+        likedCount: 0,
+        commentsCount: 0,
+        collectedCount: 0,
+        viewCount: 0,
+        sharedCount: 0,
+        ipLocation: '',
+        imagesList: [],
         createTime: '',
     );
 
@@ -43,6 +71,13 @@ class NoteInfoResult extends BaseResult {
         userName: json["userName"],
         userAvatar: json["userAvatar"],
         descr: json["descr"],
+        likedCount: json["likedCount"],
+        collectedCount: json["collectedCount"],
+        commentsCount: json["commentsCount"],
+        viewCount: json["viewCount"],
+        sharedCount: json["sharedCount"],
+        ipLocation: json["ipLocation"],
+        imagesList: List<String>.from(json["imagesList"].map((x) => x)),
         createTime: json["createTime"],
     );
 
@@ -53,6 +88,12 @@ class NoteInfoResult extends BaseResult {
         "userName": userName,
         "userAvatar": userAvatar,
         "descr": descr,
+        "likedCount": likedCount,
+        "collectedCount": collectedCount,
+        "commentsCount": commentsCount,
+        "viewCount": viewCount,
+        "ipLocation": ipLocation,
+        "imagesList": List<dynamic>.from(imagesList.map((x) => x)),
         "createTime": createTime,
     };
 }

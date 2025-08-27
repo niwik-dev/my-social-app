@@ -7,16 +7,12 @@ part of 'bottom_bar.dart';
 // **************************************************************************
 
 class ShortVideoBottomBar extends StatelessWidget {
-  const ShortVideoBottomBar({
-    Key? key,
-    required this.videoInfo,
-  }) : super(key: key);
+  const ShortVideoBottomBar({Key? key, required this.videoInfo})
+    : super(key: key);
 
   final ShortVideoInfoResult? videoInfo;
 
   @override
-  Widget build(BuildContext _context) => shortVideoBottomBar(
-        _context,
-        videoInfo: videoInfo,
-      );
+  Widget build(BuildContext _context) =>
+      shortVideoBottomBar(_context, videoInfo: videoInfo);
 }

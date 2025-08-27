@@ -16,7 +16,7 @@ class WindowUtils {
     }
     await windowManager.ensureInitialized();
     WindowOptions windowOptions = const WindowOptions(
-      size: Size(360,700),
+      size: Size(360,840),
       // center: true,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,

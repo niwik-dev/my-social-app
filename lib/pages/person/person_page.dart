@@ -54,7 +54,6 @@ class PersonPageHeaderDelegate extends SliverPersistentHeaderDelegate {
           leading: IconButton(
             icon: Icon(
               MingCuteIcons.mgc_menu_line,
-              color: Colors.white,
               size: 20,
             ),
             onPressed: () {
@@ -65,14 +64,12 @@ class PersonPageHeaderDelegate extends SliverPersistentHeaderDelegate {
             IconButton(
               icon: Icon(
                 MingCuteIcons.mgc_scan_line,
-                color: Colors.white,
               ),
               onPressed: () {},
             ),
             IconButton(
               icon: Icon(
                 MingCuteIcons.mgc_share_3_line,
-                color: Colors.white,
               ),
               onPressed: () {},
             ),
@@ -102,24 +99,28 @@ class PersonPageHeaderDelegate extends SliverPersistentHeaderDelegate {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width - 185,
-                          child: Text(
-                            maxLines: 2,
-                            loginUser!.nickname!,
-                            style: TextStyle(
-                              fontSize: 16,
+                        Expanded(
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width - 200,
+                            child: Text(
+                              maxLines: 1,
+                              loginUser!.nickname!,
+                              style: TextStyle(
+                                fontSize: 16.5,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            overflow: TextOverflow.fade,
                           ),
                         ),
-                        Gap(2),
-                        Text(
-                          '@${loginUser!.username}',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xFF999999)
-                          )
+                        Gap(16),
+                        Expanded(
+                          child: Text(
+                            '@${loginUser!.username}',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFF999999)
+                            )
+                          ),
                         ),
                       ],
                     ),
@@ -141,10 +142,10 @@ class PersonPageHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 200.0;
+  double get maxExtent => 250.0;
 
   @override
-  double get minExtent => 150.0;
+  double get minExtent => 200.0;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
@@ -173,13 +174,13 @@ Widget statistics(BuildContext context,{
           Text(
             label,
             style: TextStyle(
-              fontSize: 13.0,
+              fontSize: 15.0,
             ),
           ),
           Text(
             '$value',
             style: TextStyle(
-              fontSize: 13.0,
+              fontSize: 16.0,
             ),
           )
         ],
@@ -205,113 +206,98 @@ Widget personPageBody(BuildContext context,WidgetRef ref){
     return () {};
   },[]);
 
-  AppThemeHolder themeHolder = AppThemeHolder();
-  ThemeData theme = themeHolder.getTheme();
-
-  return Theme(
-    data: themeHolder.getTheme().copyWith(
-      listTileTheme: theme.listTileTheme.copyWith(
-        titleTextStyle: theme.listTileTheme.titleTextStyle?.copyWith(
-          fontSize: 16.0
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(2.0)
-        )
-      ),
-    ),
-    child: Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: PersonPageHeaderDelegate(
-              imageUrl: imageUrl.value,
-              loginUser: loginUser.value,
-            ),
+  return Scaffold(
+    body: CustomScrollView(
+      slivers: [
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: PersonPageHeaderDelegate(
+            imageUrl: imageUrl.value,
+            loginUser: loginUser.value,
           ),
+        ),
 
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 8.0,
-              vertical: 8.0
-            ),
-            sliver: SliverToBoxAdapter(
-              child: SizedBox(
-                height: 80,
-                child: Card(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Statistics(
-                        icon: MingCuteIcons.mgc_user_follow_2_line,
-                        label: "粉丝",
-                        value: 0,
-                      ),
-                      Statistics(
-                        icon: MingCuteIcons.mgc_thumb_up_2_line,
-                        label: "获赞",
-                        value: 0,
-                      ),
-                      Statistics(
-                        icon: MingCuteIcons.mgc_eye_line,
-                        label: "访客",
-                        value: 0,
-                      ),
-                    ],
-                  ),
+        SliverPadding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 8.0,
+            vertical: 8.0
+          ),
+          sliver: SliverToBoxAdapter(
+            child: SizedBox(
+              height: 80,
+              child: Card(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Statistics(
+                      icon: MingCuteIcons.mgc_user_follow_2_line,
+                      label: "粉丝",
+                      value: 0,
+                    ),
+                    Statistics(
+                      icon: MingCuteIcons.mgc_thumb_up_2_line,
+                      label: "获赞",
+                      value: 0,
+                    ),
+                    Statistics(
+                      icon: MingCuteIcons.mgc_eye_line,
+                      label: "访客",
+                      value: 0,
+                    ),
+                  ],
                 ),
               ),
-            )
-          ),
-
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 16
             ),
-            sliver: SliverList.list(
-              children: [
-                ListTile(
-                  style: ListTileStyle.list,
-                  dense: true,
-                  leading: Icon(MingCuteIcons.mgc_photo_album_2_line),
-                  trailing: Icon(MingCuteIcons.mgc_right_line),
-                  title: Text('相册'),
-                  onTap: (){},
-                ),
-                ListTile(
-                  style: ListTileStyle.list,
-                  dense: true,
-                  leading: Icon(MingCuteIcons.mgc_camera_2_line),
-                  trailing: Icon(MingCuteIcons.mgc_right_line),
-                  title: Text('动态'),
-                  onTap: (){},
-                ),
-                ListTile(
-                  style: ListTileStyle.list,
-                  dense: true,
-                  leading: Icon(MingCuteIcons.mgc_star_line),
-                  trailing: Icon(MingCuteIcons.mgc_right_line),
-                  title: Text('收藏'),
-                  onTap: (){},
-                ),
-                ListTile(
-                  style: ListTileStyle.list,
-                  dense: true,
-                  leading: Icon(MingCuteIcons.mgc_folder_line),
-                  trailing: Icon(MingCuteIcons.mgc_right_line),
-                  title: Text('文件'),
-                  onTap: (){},
-                ),
-              ],
-            )
-          ),
-
-          SliverPadding(
-            padding: EdgeInsets.only(top: 50),
           )
-        ],
-      ),
+        ),
+
+        SliverPadding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 16
+          ),
+          sliver: SliverList.list(
+            children: [
+              ListTile(
+                style: ListTileStyle.list,
+                dense: true,
+                leading: Icon(MingCuteIcons.mgc_photo_album_2_line),
+                trailing: Icon(MingCuteIcons.mgc_right_line),
+                title: Text('相册'),
+                onTap: (){},
+              ),
+              ListTile(
+                style: ListTileStyle.list,
+                dense: true,
+                leading: Icon(MingCuteIcons.mgc_camera_2_line),
+                trailing: Icon(MingCuteIcons.mgc_right_line),
+                title: Text('动态'),
+                onTap: (){},
+              ),
+              ListTile(
+                style: ListTileStyle.list,
+                dense: true,
+                leading: Icon(MingCuteIcons.mgc_star_line),
+                trailing: Icon(MingCuteIcons.mgc_right_line),
+                title: Text('收藏'),
+                onTap: (){},
+              ),
+              ListTile(
+                style: ListTileStyle.list,
+                dense: true,
+                leading: Icon(MingCuteIcons.mgc_folder_line),
+                trailing: Icon(MingCuteIcons.mgc_right_line),
+                title: Text('文件'),
+                onTap: (){},
+              ),
+            ],
+          )
+        ),
+
+        SliverPadding(
+          padding: EdgeInsets.only(top: 50),
+        )
+      ],
     ),
   );
 }

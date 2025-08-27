@@ -52,8 +52,8 @@ class AuthRequestUtils{
   static Dio getInstance(){
     _dio = Dio(
       BaseOptions(
-        // baseUrl: "http://127.0.0.1/:8989",
-        baseUrl: "http://117.50.162.112:8989",
+        baseUrl: "http://127.0.0.1:8989",
+        // baseUrl: "http://117.50.162.112:8989",
         validateStatus: (status) {
           return true;
         },

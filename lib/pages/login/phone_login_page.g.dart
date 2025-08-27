@@ -10,12 +10,6 @@ class PhoneLoginPage extends HookConsumerWidget {
   const PhoneLoginPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(
-    BuildContext _context,
-    WidgetRef _ref,
-  ) =>
-      phoneLoginPage(
-        _context,
-        _ref,
-      );
+  Widget build(BuildContext _context, WidgetRef _ref) =>
+      phoneLoginPage(_context, _ref);
 }

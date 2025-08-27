@@ -7,31 +7,21 @@ part of 'route_delegate.dart';
 // **************************************************************************
 
 class DrawerListRouteDelegate extends StatelessWidget {
-  const DrawerListRouteDelegate(
-    this.item, {
-    Key? key,
-  }) : super(key: key);
+  const DrawerListRouteDelegate(this.item, {Key? key}) : super(key: key);
 
   final IDrawerListItem item;
 
   @override
-  Widget build(BuildContext _context) => drawerListRouteDelegate(
-        _context,
-        item,
-      );
+  Widget build(BuildContext _context) =>
+      drawerListRouteDelegate(_context, item);
 }
 
 class DrawerActionRouteDelegate extends StatelessWidget {
-  const DrawerActionRouteDelegate(
-    this.item, {
-    Key? key,
-  }) : super(key: key);
+  const DrawerActionRouteDelegate(this.item, {Key? key}) : super(key: key);
 
   final IDrawerActionItem item;
 
   @override
-  Widget build(BuildContext _context) => drawerActionRouteDelegate(
-        _context,
-        item,
-      );
+  Widget build(BuildContext _context) =>
+      drawerActionRouteDelegate(_context, item);
 }

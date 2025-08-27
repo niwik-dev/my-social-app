@@ -7,18 +7,14 @@ part of 'side_bar.dart';
 // **************************************************************************
 
 class NetworkVideoAuthorAvatar extends StatelessWidget {
-  const NetworkVideoAuthorAvatar({
-    Key? key,
-    required this.avatarUrl,
-  }) : super(key: key);
+  const NetworkVideoAuthorAvatar({Key? key, required this.avatarUrl})
+    : super(key: key);
 
   final String avatarUrl;
 
   @override
-  Widget build(BuildContext _context) => networkVideoAuthorAvatar(
-        _context,
-        avatarUrl: avatarUrl,
-      );
+  Widget build(BuildContext _context) =>
+      networkVideoAuthorAvatar(_context, avatarUrl: avatarUrl);
 }
 
 class DefaultVideoAuthorAvatar extends StatelessWidget {
@@ -47,24 +43,20 @@ class SideBarIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext _context) => sideBarIconButton(
-        icon: icon,
-        label: label,
-        number: number,
-        onPressed: onPressed,
-      );
+    icon: icon,
+    label: label,
+    number: number,
+    onPressed: onPressed,
+  );
 }
 
 class ShortVideoSideBar extends StatelessWidget {
-  const ShortVideoSideBar({
-    Key? key,
-    required this.videoInfo,
-  }) : super(key: key);
+  const ShortVideoSideBar({Key? key, required this.videoInfo})
+    : super(key: key);
 
   final ShortVideoInfoResult? videoInfo;
 
   @override
-  Widget build(BuildContext _context) => shortVideoSideBar(
-        _context,
-        videoInfo: videoInfo,
-      );
+  Widget build(BuildContext _context) =>
+      shortVideoSideBar(_context, videoInfo: videoInfo);
 }

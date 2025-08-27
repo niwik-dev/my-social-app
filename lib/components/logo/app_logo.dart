@@ -11,7 +11,7 @@ Widget appLogo(BuildContext context){
         '青柠',
         style: TextStyle(
           color: Color(0xFF5EC7AB),
-          fontSize: 36,
+          fontSize: 48,
           fontWeight: FontWeight.bold,
           letterSpacing: 2
         )
@@ -19,7 +19,7 @@ Widget appLogo(BuildContext context){
       Text(
         '圈子',
         style: TextStyle(
-          fontSize: 36,
+          fontSize: 48,
           fontWeight: FontWeight.bold,
           color: Colors.black,
           letterSpacing: 2

@@ -7,20 +7,14 @@ part of 'chat_bubble.dart';
 // **************************************************************************
 
 class ChatBubble extends StatelessWidget {
-  const ChatBubble({
-    Key? key,
-    required this.text,
-    this.isUser = false,
-  }) : super(key: key);
+  const ChatBubble({Key? key, required this.text, this.isUser = false})
+    : super(key: key);
 
   final String text;
 
   final bool isUser;
 
   @override
-  Widget build(BuildContext _context) => chatBubble(
-        _context,
-        text: text,
-        isUser: isUser,
-      );
+  Widget build(BuildContext _context) =>
+      chatBubble(_context, text: text, isUser: isUser);
 }

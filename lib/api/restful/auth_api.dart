@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:my_social/model/response/captch_result.dart';
 import 'package:my_social/model/common/data_result.dart';
+import 'package:my_social/model/store/openim_state.dart';
 import 'package:my_social/service/pref_service.dart';
 import '../../model/store/login_user.dart';
 import '../../store/login/login_store.dart';
+import '../../store/openim/openim_store.dart';
 import '../../utils/base64_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -82,6 +84,9 @@ class AuthApi{
     Response response = await post(
       '$url?username=$username&password=$password&captchaKey=$captchaKey&captcha=$captcha'
     );
+
+    PrefService prefService = PrefService();
+
     if(response.statusCode == 200){
       if(response.data["code"] == "00000"){
         LoginUser loginUser = LoginUser(
@@ -90,23 +95,42 @@ class AuthApi{
           accessToken: response.data?["data"]["accessToken"],
           refreshToken: response.data?["data"]["refreshToken"],
         );
-        // 存入全局状态中
+        // 用户状态存入全局状态中
         var loginUserStoreNotifier = ref.watch(loginUserStoreProvider.notifier);
         loginUserStoreNotifier.setLoginUser(loginUser);
 
-        // 存入本地存储中
-        PrefService prefService = PrefService();
+        // 用户状态存入本地存储中
         prefService.saveLoginUser(loginUser);
 
-        DataResult loginResult = DataResult.fromResponse(
+        var openIMInfo = response.data?["data"]["openim"];
+
+        if(openIMInfo!=null) {
+          OpenIMState openIMState = OpenIMState(
+            token: response.data?["data"]["openim"]["token"],
+            expireTimeSeconds: int.parse(
+                response.data?["data"]["openim"]["expireTimeSeconds"]
+            ),
+          );
+
+          // openIM状态存入全局状态中
+          var openIMStoreNotifier = ref.watch(openIMStoreProvider.notifier);
+          openIMStoreNotifier.update(openIMState);
+
+          // openIM状态存入本地存储中
+          prefService.saveOpenIMState(openIMState);
+        }else{
+          throw Exception("本账户未绑定OpenIM账号");
+        }
+
+        DataResult result = DataResult.fromResponse(
           response: response
         );
-        return loginResult;
+        return result;
       }
     }
-    DataResult loginResult = DataResult.fromResponse(
+    DataResult result = DataResult.fromResponse(
       response: response
     );
-    return loginResult;
+    return result;
   }
 }

@@ -17,12 +17,6 @@ class AiChatPage extends HookConsumerWidget {
   const AiChatPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(
-    BuildContext _context,
-    WidgetRef _ref,
-  ) =>
-      aiChatPage(
-        _context,
-        _ref,
-      );
+  Widget build(BuildContext _context, WidgetRef _ref) =>
+      aiChatPage(_context, _ref);
 }

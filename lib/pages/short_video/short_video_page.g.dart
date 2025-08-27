@@ -10,12 +10,6 @@ class ShortVideoPageBody extends HookConsumerWidget {
   const ShortVideoPageBody({Key? key}) : super(key: key);
 
   @override
-  Widget build(
-    BuildContext _context,
-    WidgetRef _ref,
-  ) =>
-      shortVideoPageBody(
-        _context,
-        _ref,
-      );
+  Widget build(BuildContext _context, WidgetRef _ref) =>
+      shortVideoPageBody(_context, _ref);
 }

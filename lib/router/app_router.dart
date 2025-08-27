@@ -15,8 +15,11 @@ import 'package:my_social/pages/overview/tab_route.dart';
 import 'package:my_social/pages/person/person_page.dart';
 import 'package:my_social/pages/register/social_info_register_page.dart';
 import 'package:my_social/pages/register/account_register_page.dart';
+import 'package:my_social/pages/setting/general/general_setting_page.dart';
 import 'package:my_social/pages/setting/setting_page.dart';
 import 'package:my_social/pages/short_video/short_video_page.dart';
+
+import '../pages/message/message_page.dart';
 
 class AppRouterHolder{
   // 单例模式
@@ -89,6 +92,7 @@ class AppRouterHolder{
                     tabName: '消息',
                     icon: Icon(MingCuteIcons.mgc_message_1_line),
                     activeIcon: Icon(MingCuteIcons.mgc_message_2_fill),
+                    body: MessagePageBody(),
                   ),
                   TabRouteItem(
                     tabName: '我的',
@@ -172,6 +176,11 @@ class AppRouterHolder{
             path: '/setting',
             builder: (context, state) => SettingPage(),
           ),
+
+          GoRoute(
+            path: '/setting/general',
+            builder: (context, state) => GeneralSettingPage(),
+          )
         ],
       );
       _init = true;

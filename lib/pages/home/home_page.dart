@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:ming_cute_icons/ming_cute_icons.dart';
 import 'package:my_social/api/restful/note_api.dart';
 import 'package:my_social/model/common/page_response.dart';
 import 'package:my_social/model/response/note_info_result.dart';
@@ -19,6 +20,7 @@ Widget noteCard({
   return GestureDetector(
     onTap: onTap,
     child: Card(
+      shape: RoundedRectangleBorder(),
       child: Wrap(
         children: [
           Image.network(
@@ -52,6 +54,15 @@ Widget noteCard({
                     fontSize: 10.0,
                   ),
                 ),
+                Spacer(),
+                Icon(
+                  MingCuteIcons.mgc_star_line,
+                  size: 15.0,
+                ),
+                Gap(4),
+                Text(
+                  '${note.collectedCount}'
+                )
               ],
             ),
           )

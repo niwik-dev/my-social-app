@@ -10,12 +10,6 @@ class AccoutLoginPage extends HookConsumerWidget {
   const AccoutLoginPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(
-    BuildContext _context,
-    WidgetRef _ref,
-  ) =>
-      accoutLoginPage(
-        _context,
-        _ref,
-      );
+  Widget build(BuildContext _context, WidgetRef _ref) =>
+      accoutLoginPage(_context, _ref);
 }

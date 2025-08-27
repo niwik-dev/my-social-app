@@ -7,21 +7,11 @@ part of 'index_page.dart';
 // **************************************************************************
 
 class IndexPage extends HookConsumerWidget {
-  const IndexPage(
-    this.state, {
-    Key? key,
-  }) : super(key: key);
+  const IndexPage(this.state, {Key? key}) : super(key: key);
 
   final GoRouterState state;
 
   @override
-  Widget build(
-    BuildContext _context,
-    WidgetRef _ref,
-  ) =>
-      indexPage(
-        _context,
-        _ref,
-        state,
-      );
+  Widget build(BuildContext _context, WidgetRef _ref) =>
+      indexPage(_context, _ref, state);
 }

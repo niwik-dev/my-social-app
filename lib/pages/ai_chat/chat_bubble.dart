@@ -42,7 +42,9 @@ Widget chatBubble(
       children: [
         DecoratedBox(
           decoration: BoxDecoration(
-            color: isUser?Colors.black87:Colors.white,
+            color: Theme.of(context).brightness == Brightness.light?
+               isUser?Colors.black87:Colors.white:
+               isUser?Colors.white:Theme.of(context).primaryColor,
             borderRadius: getBorderRadius(
               isUser
             ),
@@ -62,7 +64,9 @@ Widget chatBubble(
                 text,
                 style: TextStyle(
                   fontSize: 15,
-                  color: isUser?Colors.white:Colors.black
+                  color: Theme.of(context).brightness == Brightness.light?
+                    isUser?Colors.white:Colors.black:
+                    isUser?Colors.black:Colors.white
                 ),
               ),
           ),

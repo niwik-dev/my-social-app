@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_social/model/common/page_response.dart';
+import 'package:my_social/model/response/note_comment_result.dart';
 import 'package:my_social/model/response/note_info_result.dart';
 import 'package:my_social/utils/request_utils.dart';
 
@@ -52,5 +53,28 @@ class NoteApi{
     return NoteInfoResult.fromJson(
       response.data["data"],
     );
+  }
+
+  Future<List<NoteCommentResult>> getNoteCommentList(WidgetRef ref,{
+    required String noteId,
+    required int pageNum,
+    required int pageSize
+  }) async { 
+    String uri = "/api/v1/note/comments";
+    Response response = await AuthRequestUtils.post(
+      ref,
+      uri,
+      {
+        "noteId": noteId,
+        "pageNum": pageNum,
+        "pageSize": pageSize,
+      }
+    );
+    var data = response.data["data"];
+    List<NoteCommentResult> result = [];
+    for (var item in data) { 
+      result.add(NoteCommentResult.fromJson(item));
+    }
+    return result;
   }
 }

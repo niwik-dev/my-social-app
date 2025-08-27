@@ -12,14 +12,14 @@ String _$loginUserStoreHash() => r'a2b01fe688457fe7407e7a2c4bed4ae035cce5ca';
 @ProviderFor(LoginUserStore)
 final loginUserStoreProvider =
     AutoDisposeNotifierProvider<LoginUserStore, LoginUser>.internal(
-  LoginUserStore.new,
-  name: r'loginUserStoreProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$loginUserStoreHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      LoginUserStore.new,
+      name: r'loginUserStoreProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$loginUserStoreHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$LoginUserStore = AutoDisposeNotifier<LoginUser>;
 // ignore_for_file: type=lint

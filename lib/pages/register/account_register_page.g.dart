@@ -10,12 +10,6 @@ class AccountRegisterPage extends HookConsumerWidget {
   const AccountRegisterPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(
-    BuildContext _context,
-    WidgetRef _ref,
-  ) =>
-      accountRegisterPage(
-        _context,
-        _ref,
-      );
+  Widget build(BuildContext _context, WidgetRef _ref) =>
+      accountRegisterPage(_context, _ref);
 }

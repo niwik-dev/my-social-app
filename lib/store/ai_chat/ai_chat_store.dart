@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ai_chat_store.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AiChatHistoryStore extends _$AiChatHistoryStore {
   @override
   List<AiChatSession> build() {

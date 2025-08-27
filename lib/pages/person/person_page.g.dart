@@ -21,24 +21,14 @@ class Statistics extends StatelessWidget {
   final int value;
 
   @override
-  Widget build(BuildContext _context) => statistics(
-        _context,
-        icon: icon,
-        label: label,
-        value: value,
-      );
+  Widget build(BuildContext _context) =>
+      statistics(_context, icon: icon, label: label, value: value);
 }
 
 class PersonPageBody extends HookConsumerWidget {
   const PersonPageBody({Key? key}) : super(key: key);
 
   @override
-  Widget build(
-    BuildContext _context,
-    WidgetRef _ref,
-  ) =>
-      personPageBody(
-        _context,
-        _ref,
-      );
+  Widget build(BuildContext _context, WidgetRef _ref) =>
+      personPageBody(_context, _ref);
 }

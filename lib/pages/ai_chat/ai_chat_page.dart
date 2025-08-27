@@ -1,5 +1,5 @@
-import 'package:async/async.dart';
-import 'package:flutter/gestures.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:gap/gap.dart';
@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
-import 'package:my_social/api/restful/auth_api.dart';
 import 'package:my_social/api/restful/user_api.dart';
 import 'package:my_social/model/store/ai_chat_sessions.dart';
 import 'package:my_social/model/store/login_user.dart';
@@ -15,9 +14,9 @@ import 'package:my_social/model/view/session_prompt.dart';
 import 'package:my_social/pages/ai_chat/ai_chat_header.dart';
 import 'package:my_social/pages/ai_chat/chat_bubble.dart';
 import 'package:my_social/pages/ai_chat/chat_topic_box.dart';
+import 'package:my_social/pages/ai_chat/option_toggle_button.dart';
 import 'package:my_social/service/ai_chat_service.dart';
 import 'package:my_social/store/ai_chat/ai_chat_store.dart';
-import 'package:my_social/store/login/login_store.dart';
 
 part 'ai_chat_page.g.dart';
 
@@ -237,7 +236,7 @@ Widget aiChatPage(BuildContext context,WidgetRef ref) {
           Text('Ai助手',),
         ],
       ),
-      actionsPadding: EdgeInsets.only(right: 8),
+      // actionsPadding: EdgeInsets.only(right: 8),
       actions: [
         IconButton(
           icon: Icon(
@@ -251,7 +250,6 @@ Widget aiChatPage(BuildContext context,WidgetRef ref) {
       ],
     ),
     drawer: Drawer(
-      backgroundColor: Colors.white,
       child: Container(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -308,6 +306,7 @@ Widget aiChatPage(BuildContext context,WidgetRef ref) {
             ),
             Divider(
               color: Colors.black12,
+              height: 8.0,
             ),
             ListView(
               shrinkWrap: true,
@@ -390,13 +389,16 @@ Widget aiChatPage(BuildContext context,WidgetRef ref) {
                   ),
                 ),
                 Gap(8),
-                Text(
-                  loginUser.value.nickname!,
-                  style: TextStyle(
-                    fontSize: 16,
+                Expanded(
+                  child: Text(
+                    loginUser.value.nickname!,
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
                   ),
                 ),
-                Spacer(),
                 IconButton(
                   icon: Badge(
                     child: Icon(MingCuteIcons.mgc_settings_3_line),
@@ -433,7 +435,7 @@ Widget aiChatPage(BuildContext context,WidgetRef ref) {
             ),
             SliverToBoxAdapter(
               child: SizedBox(
-                height: 24,
+                height: 32,
                 child: Center(
                   child: Text(
                     'ai生成内容仅供参考',
@@ -491,8 +493,11 @@ Widget aiChatPage(BuildContext context,WidgetRef ref) {
                         ],
                       ),
                     ),
+
                     Gap(8),
+
                     TextField(
+                      textAlignVertical: TextAlignVertical.top,
                       controller: textEditController,
                       enabled: !isChatProcessing.value,
                       onChanged: (value) {
@@ -502,89 +507,53 @@ Widget aiChatPage(BuildContext context,WidgetRef ref) {
                         fontSize: 15
                       ),
                       decoration: InputDecoration(
-                        hint: Text('向 Ai助手 发送消息'),
+                        isDense: true,
+                        hintText: '向 Ai助手 发送消息',
+                        contentPadding: EdgeInsets.only(
+                          left: 16, right: 16, top: 16,
+                          bottom: 64
+                        ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            width: 0.5,
-                            color: Colors.black26
+                              width: 0.5,
+                              color: Colors.black26
                           ),
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            width: 0.5,
-                            color: Colors.black54
+                              width: 0.5,
+                              color: Colors.black54
                           ),
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      maxLines: 3,
+                      maxLines: 1,
                     )
                   ],
                 ),
 
                 Positioned(
                   left: 12,
-                  bottom: 12,
+                  bottom: 8,
                   child: Wrap(
                     spacing: 4,
+                    direction: Axis.horizontal,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.start,
                     children: [
-                      OutlinedButton.icon(
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll(
-                            isDeepThink.value?Colors.black87:Colors.white,
-                          ),
-                          foregroundColor: WidgetStatePropertyAll(
-                            isDeepThink.value?Colors.white:Colors.black87,
-                          ),
-                          shape: WidgetStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            )
-                          ),
-                          padding: WidgetStatePropertyAll(
-                            EdgeInsets.symmetric(horizontal: 8)
-                          ),
-                          textStyle: WidgetStatePropertyAll(
-                            TextStyle(
-                              fontSize: 12
-                            )
-                          ),
-                          iconSize: WidgetStatePropertyAll(12),
-                        ),
+                      OptionToggleButton(
                         label: Text('深度思考'),
                         icon: Icon(MingCuteIcons.mgc_lightning_line),
-                        onPressed: () {
-                          isDeepThink.value = !isDeepThink.value;
+                        onChanged: (bool value) {
+                          isDeepThink.value = value;
                         },
                       ),
-                      OutlinedButton.icon(
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll(
-                            isInternetSearch.value?Colors.black87:Colors.white,
-                          ),
-                          foregroundColor: WidgetStatePropertyAll(
-                            isInternetSearch.value?Colors.white:Colors.black87,
-                          ),
-                          shape: WidgetStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16)
-                            )
-                          ),
-                          padding: WidgetStatePropertyAll(
-                            EdgeInsets.symmetric(horizontal: 8)
-                          ),
-                          textStyle: WidgetStatePropertyAll(
-                            TextStyle(
-                              fontSize: 12
-                            )
-                          ),
-                          iconSize: WidgetStatePropertyAll(12)
-                        ),
+                      OptionToggleButton(
                         label: Text('联网搜索'),
                         icon: Icon(MingCuteIcons.mgc_earth_2_line),
-                        onPressed: () {
-                          isInternetSearch.value = !isInternetSearch.value;
+                        onChanged: (bool value) {
+                          isInternetSearch.value = value;
                         },
                       )
                     ],

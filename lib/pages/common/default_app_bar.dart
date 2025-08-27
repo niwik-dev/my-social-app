@@ -3,7 +3,7 @@ import 'package:ming_cute_icons/ming_cute_icons.dart';
 
 AppBar defaultAppBar(){
   return AppBar(
-    actionsPadding: EdgeInsets.all(8),
+    // actionsPadding: EdgeInsets.all(8),
     leading: Builder(
       builder: (BuildContext context){
         return GestureDetector(

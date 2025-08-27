@@ -9,7 +9,7 @@ part 'route_delegate.g.dart';
 Widget drawerListRouteDelegate(
   BuildContext context, IDrawerListItem item
 ){
-  final double textSize = 15;
+  final double textSize = 16;
   if(item is DrawerRouteListItem){
     return ListTile(
       dense: true,
@@ -18,7 +18,6 @@ Widget drawerListRouteDelegate(
         item.title,
         style: TextStyle(
           fontSize: textSize,
-          color: Color(0xFF333333),
         ),
       ),
       leading: item.icon,
@@ -65,7 +64,6 @@ Widget drawerListRouteDelegate(
               item.title,
               style: TextStyle(
                 fontSize: textSize,
-                color: Color(0xFF333333),
               ),
             ),
             shape: shapeBorder,
@@ -93,7 +91,7 @@ Widget drawerListRouteDelegate(
 Widget drawerActionRouteDelegate(
   BuildContext context, IDrawerActionItem item
 ){
-  final double textSize = 14;
+  final double textSize = 16;
   if(item is DrawerRouteActionItem){
     return Wrap(
       direction: Axis.vertical,

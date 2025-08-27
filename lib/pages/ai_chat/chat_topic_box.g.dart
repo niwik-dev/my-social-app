@@ -21,10 +21,6 @@ class ChatTopicBox extends StatelessWidget {
   final void Function() onTap;
 
   @override
-  Widget build(BuildContext _context) => chatTopicBox(
-        _context,
-        title: title,
-        subtitle: subtitle,
-        onTap: onTap,
-      );
+  Widget build(BuildContext _context) =>
+      chatTopicBox(_context, title: title, subtitle: subtitle, onTap: onTap);
 }
