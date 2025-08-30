@@ -88,6 +88,12 @@ class AppThemeHolder{
           ),
         ),
 
+        switchTheme: SwitchThemeData(
+          splashRadius: 0,
+          thumbColor: WidgetStatePropertyAll(Colors.black),
+          trackOutlineWidth: WidgetStatePropertyAll(1)
+        ),
+
         bottomAppBarTheme: BottomAppBarThemeData(
           color: Color(0xFFF5F5F5),
         ),
@@ -204,6 +210,7 @@ class AppThemeHolder{
         switchTheme: SwitchThemeData(
           splashRadius: 0,
           thumbColor: WidgetStatePropertyAll(Colors.white),
+          trackOutlineWidth: WidgetStatePropertyAll(1)
         ),
         iconTheme: IconThemeData(
           color: Colors.white
@@ -266,6 +273,8 @@ class AppThemeHolder{
           ),
           iconColor: Colors.white,
         ),
+
+        
 
         badgeTheme: BadgeThemeData(
           backgroundColor: Colors.redAccent

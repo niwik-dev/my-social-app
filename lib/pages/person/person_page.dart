@@ -85,7 +85,13 @@ class PersonPageHeaderDelegate extends SliverPersistentHeaderDelegate {
               margin: EdgeInsets.symmetric(
                 horizontal: 16
               ),
-              child: Padding(
+              child: loginUser==null? 
+              SizedBox.expand(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ): 
+              Padding(
                 padding: EdgeInsets.all(16),
                 child: Row(
                   children: [
@@ -294,9 +300,9 @@ Widget personPageBody(BuildContext context,WidgetRef ref){
           )
         ),
 
-        SliverPadding(
-          padding: EdgeInsets.only(top: 50),
-        )
+        // SliverPadding(
+        //   padding: EdgeInsets.only(top: 50),
+        // )
       ],
     ),
   );

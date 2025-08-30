@@ -91,7 +91,8 @@ Widget defaultVideoAuthorAvatar(BuildContext context){
 Widget shortVideoSideBar(
   BuildContext context,
   {
-    required ShortVideoInfoResult? videoInfo
+    required ShortVideoInfoResult? videoInfo,
+    required VoidCallback onOpenComment
   }
 ){
   return Padding(
@@ -113,7 +114,7 @@ Widget shortVideoSideBar(
           icon: MingCuteIcons.mgc_comment_2_fill,
           label: '评论',
           number: videoInfo?.commentCount,
-          onPressed: (){},
+          onPressed: onOpenComment,
         ),
 
         sideBarIconButton(

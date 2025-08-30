@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
 
 /// 聊天历史界面的固定首部栏
@@ -22,14 +21,14 @@ class ChatHistoryHeaderBarDelegate extends SliverPersistentHeaderDelegate{
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: const Icon(
-              MingCuteIcons.mgc_chat_1_line,
-              size: 18,
-            ),
+          Spacer(),
+          const Icon(
+            MingCuteIcons.mgc_chat_1_line,
+            size: 18,
           ),
-          Gap(8),
+          SizedBox(width: 8),
           Expanded(
+            flex: 2,
             child: Text(
               title,
               style: const TextStyle(
@@ -38,7 +37,8 @@ class ChatHistoryHeaderBarDelegate extends SliverPersistentHeaderDelegate{
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-          )
+          ),
+          Spacer()
         ],
       ),
     );

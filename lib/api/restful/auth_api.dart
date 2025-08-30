@@ -102,26 +102,6 @@ class AuthApi{
         // 用户状态存入本地存储中
         prefService.saveLoginUser(loginUser);
 
-        var openIMInfo = response.data?["data"]["openim"];
-
-        if(openIMInfo!=null) {
-          OpenIMState openIMState = OpenIMState(
-            token: response.data?["data"]["openim"]["token"],
-            expireTimeSeconds: int.parse(
-                response.data?["data"]["openim"]["expireTimeSeconds"]
-            ),
-          );
-
-          // openIM状态存入全局状态中
-          var openIMStoreNotifier = ref.watch(openIMStoreProvider.notifier);
-          openIMStoreNotifier.update(openIMState);
-
-          // openIM状态存入本地存储中
-          prefService.saveOpenIMState(openIMState);
-        }else{
-          throw Exception("本账户未绑定OpenIM账号");
-        }
-
         DataResult result = DataResult.fromResponse(
           response: response
         );

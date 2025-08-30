@@ -15,6 +15,25 @@ class FormatUtils{
     return '${(number/1000000000).toStringAsFixed(1)}B';
  }
 
+ static String formatNumberCN(int? number){
+    if(number == null){
+      return '0';
+    }
+    if(number < 1000){
+      return number.toString();
+    }
+    if(number>1_000&& number < 10_000){
+      return '${(number/1_000).toStringAsFixed(1)}千';
+    }
+    if(number>10_000&& number < 10_000_000){
+      return '${(number/10_000).toStringAsFixed(1)}万';
+    }
+    if(number>10_000_000&& number < 1_000_000_000){
+      return '${(number/10_000_000).toStringAsFixed(1)}千万';
+    }
+    return '${(number/1_000_000_000).toStringAsFixed(1)}亿';
+ }
+
  static DateTime parseTimestamp(int timestamp){
    return DateTime.fromMillisecondsSinceEpoch(timestamp * 1_000);
  }

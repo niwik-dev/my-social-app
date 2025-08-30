@@ -51,12 +51,20 @@ class SideBarIconButton extends StatelessWidget {
 }
 
 class ShortVideoSideBar extends StatelessWidget {
-  const ShortVideoSideBar({Key? key, required this.videoInfo})
-    : super(key: key);
+  const ShortVideoSideBar({
+    Key? key,
+    required this.videoInfo,
+    required this.onOpenComment,
+  }) : super(key: key);
 
   final ShortVideoInfoResult? videoInfo;
 
+  final void Function() onOpenComment;
+
   @override
-  Widget build(BuildContext _context) =>
-      shortVideoSideBar(_context, videoInfo: videoInfo);
+  Widget build(BuildContext _context) => shortVideoSideBar(
+    _context,
+    videoInfo: videoInfo,
+    onOpenComment: onOpenComment,
+  );
 }

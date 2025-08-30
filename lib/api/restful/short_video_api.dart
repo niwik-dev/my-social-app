@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_social/model/common/page_response.dart';
+import 'package:my_social/model/response/short_video_comment_result.dart';
 import 'package:my_social/model/response/short_video_info_result.dart';
 import 'package:my_social/utils/request_utils.dart';
 
@@ -35,20 +36,31 @@ class ShortVideoApi {
     return PageResponse.fromJson(response.data, (json) => ShortVideoInfoResult.fromJson(json));
   }
 
-  Future<ShortVideoInfoResult?> getShortVideoInfoById(WidgetRef ref, String shortVideoId) async {
-    String uri = "/api/v1/short_video/one";
-    Response response = await AuthRequestUtils.get(
+  Future<List<ShortVideoCommentResult>?> getShortVideoComments(
+    WidgetRef ref, {
+      required String videoId,
+      required int pageNum,
+      required int pageSize
+    }
+  ) async{
+    String uri = "/api/v1/short-video/comments";
+    Response response = await AuthRequestUtils.post(
       ref,
       uri,
-      params: {
-        "shortVideoId": shortVideoId
+      {
+        "videoId": videoId,
+        "pageNum": pageNum,
+        "pageSize": pageSize,
       }
     );
     if(response.statusCode != 200){
       return null;
     }
-    return ShortVideoInfoResult.fromJson(
-      response.data["data"],
-    );
+    final result = response.data["data"]
+    .map<ShortVideoCommentResult>(
+      (x) => ShortVideoCommentResult.fromJson(x)
+    ).toList();
+
+    return result;
   }
 }
