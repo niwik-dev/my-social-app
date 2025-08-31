@@ -31,7 +31,15 @@ Widget mySocialApp(BuildContext context){
             debugShowCheckedModeBanner: false,
             routerConfig: routerHolder.getRouter(),
             theme: appSettings.isDarkMode?
-              themeHolder.getDarkTheme(): themeHolder.getLightTheme(),
+              themeHolder.getDarkTheme(
+                primaryColor: appSettings.themePrimaryColor,
+                useSysFont: appSettings.useSysFont,
+                fontSize: appSettings.fontSize
+              ): themeHolder.getLightTheme(
+                primaryColor: appSettings.themePrimaryColor,
+                useSysFont: appSettings.useSysFont,
+                fontSize: appSettings.fontSize
+              ),
           );
         },
       ),

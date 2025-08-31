@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:my_social/constant/server_config.dart';
 import 'package:my_social/model/response/captch_result.dart';
 import 'package:my_social/model/common/data_result.dart';
 import 'package:my_social/model/store/openim_state.dart';
@@ -18,7 +19,7 @@ class AuthApi{
   AuthApi._internal();
 
   // 登录接口地址
-  static const String baseUrl = "http://117.50.162.112:8989";
+  static const String baseUrl = "http://${ServerConfig.ipAddress}:${ServerConfig.httpPort}";
 
   static bool isClientInitialized = false;
   static late Dio httpClient;

@@ -10,19 +10,28 @@ class AppThemeHolder{
 
   bool isLightThemeInit = false;
   late ThemeData lightTheme;
+  final Color lightPrimaryColor = Color.fromARGB(255, 8, 168, 128);
+
   bool isDarkThemeInit = false;
   late ThemeData darkTheme;
+  final Color darkPrimaryColor = Color.fromARGB(255, 60, 228, 186);
 
   final String globalFontFamily = 'fc-regular';
   final double buttonVerticalPadding = Platform.isAndroid? 14: 20;
   final double buttonHorizontalPadding = Platform.isAndroid? 16: 22;
 
-  ThemeData getLightTheme(){
-    if(!isLightThemeInit){
+  ThemeData getLightTheme({
+    bool? useSysFont,
+    Color? primaryColor,
+    double? fontSize
+  }){
+    if(!isLightThemeInit 
+      || primaryColor != null || useSysFont != null || fontSize != null
+    ){
       lightTheme = ThemeData(
         brightness: Brightness.light,
         colorScheme: ColorScheme.highContrastLight(
-          primary: Color.fromARGB(255, 8, 168, 128),
+          primary: primaryColor??lightPrimaryColor,
         ),
         checkboxTheme: CheckboxThemeData(
           splashRadius: 0
@@ -31,6 +40,17 @@ class AppThemeHolder{
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0)
+          ),
+        ),
+        expansionTileTheme: ExpansionTileThemeData(
+          collapsedShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide.none
+          ),
+          collapsedBackgroundColor: Colors.white70,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide.none
           ),
         ),
 
@@ -46,7 +66,7 @@ class AppThemeHolder{
           ),
           titleTextStyle: TextStyle(
             fontSize: 16,
-            fontFamily: globalFontFamily,
+            fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null,
             color: Color(0xFF333333),
           )
         ),
@@ -66,9 +86,9 @@ class AppThemeHolder{
           ),
           horizontalTitleGap: 16,
           titleTextStyle: TextStyle(
-            fontFamily: globalFontFamily,
+            fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null,
             color: Color(0xFF333333),
-            fontSize: 16
+            fontSize: fontSize?? 16
           ),
           tileColor: Colors.white,
           selectedTileColor: Colors.white,
@@ -90,7 +110,14 @@ class AppThemeHolder{
 
         switchTheme: SwitchThemeData(
           splashRadius: 0,
-          thumbColor: WidgetStatePropertyAll(Colors.black),
+          thumbColor: WidgetStateProperty.resolveWith(
+            (Set<WidgetState> states){
+              if(states.contains(WidgetState.selected)){
+                return Colors.white;
+              }
+              return Colors.black;
+            }
+          ),
           trackOutlineWidth: WidgetStatePropertyAll(1)
         ),
 
@@ -134,8 +161,8 @@ class AppThemeHolder{
               vertical: buttonVerticalPadding,
             ),
             textStyle: TextStyle(
-              fontSize: 16,
-              fontFamily: globalFontFamily
+              fontSize: fontSize??16,
+              fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null
             ),
             iconColor: Colors.white,
             shape: RoundedRectangleBorder(
@@ -150,8 +177,8 @@ class AppThemeHolder{
               vertical: buttonVerticalPadding,
             ),
             textStyle: TextStyle(
-              fontSize: 16,
-              fontFamily: globalFontFamily
+              fontSize: fontSize??16,
+              fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null
             ),
             shape: RoundedRectangleBorder(
               side: BorderSide(
@@ -175,8 +202,8 @@ class AppThemeHolder{
               borderRadius: BorderRadius.circular(8)
             ),
             textStyle: TextStyle(
-              fontSize: 16,
-              fontFamily: globalFontFamily
+              fontSize: fontSize??16,
+              fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null
             ),
             splashFactory: NoSplash.splashFactory,
             foregroundColor: Color(0xFF333333),
@@ -190,19 +217,23 @@ class AppThemeHolder{
             hoverColor: Colors.transparent
           ),
         ),
-        fontFamily: globalFontFamily
+        fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null
       );
       isLightThemeInit = true;
     }
     return lightTheme;
   }
 
-  ThemeData getDarkTheme(){
-    if(!isDarkThemeInit){
+  ThemeData getDarkTheme({
+    bool? useSysFont,
+    Color? primaryColor,
+    double? fontSize
+  }){
+    if(!isDarkThemeInit || primaryColor != null || useSysFont != null){
       darkTheme = ThemeData(
         brightness: Brightness.dark,
         colorScheme: ColorScheme.highContrastDark(
-          primary: Color.fromARGB(255, 60, 228, 186),
+          primary: primaryColor??darkPrimaryColor,
         ),
         checkboxTheme: CheckboxThemeData(
           splashRadius: 0
@@ -220,6 +251,16 @@ class AppThemeHolder{
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0)
           )
+        ),
+        expansionTileTheme: ExpansionTileThemeData(
+          collapsedShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide.none
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide.none
+          ),
         ),
 
         tabBarTheme: TabBarThemeData(
@@ -246,8 +287,8 @@ class AppThemeHolder{
             color: Colors.white,
           ),
           titleTextStyle: TextStyle(
-            fontSize: 16,
-            fontFamily: globalFontFamily,
+            fontSize: fontSize??16,
+            fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null,
             color: Colors.white,
           )
         ),
@@ -267,14 +308,12 @@ class AppThemeHolder{
           ),
           horizontalTitleGap: 16,
           titleTextStyle: TextStyle(
-            fontFamily: globalFontFamily,
-            fontSize: 16,
+            fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null,
+            fontSize: fontSize??16,
             color: Colors.white,
           ),
           iconColor: Colors.white,
-        ),
-
-        
+        ),     
 
         badgeTheme: BadgeThemeData(
           backgroundColor: Colors.redAccent
@@ -330,8 +369,8 @@ class AppThemeHolder{
               vertical: buttonVerticalPadding,
             ),
             textStyle: TextStyle(
-              fontSize: 16,
-              fontFamily: globalFontFamily,
+              fontSize: fontSize??16,
+              fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null,
             ),
             foregroundColor: Colors.white,
             iconColor: Colors.white,
@@ -348,7 +387,7 @@ class AppThemeHolder{
             ),
             textStyle: TextStyle(
               fontSize: 16,
-              fontFamily: globalFontFamily
+              fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null
             ),
             shape: RoundedRectangleBorder(
               side: BorderSide(
@@ -372,8 +411,8 @@ class AppThemeHolder{
               borderRadius: BorderRadius.circular(8)
             ),
             textStyle: TextStyle(
-              fontSize: 16,
-              fontFamily: globalFontFamily,
+              fontSize: fontSize??16,
+              fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null,
             ),
             splashFactory: NoSplash.splashFactory,
             foregroundColor: Colors.white,
@@ -387,7 +426,7 @@ class AppThemeHolder{
             hoverColor: Colors.transparent
           ),
         ),
-        fontFamily: globalFontFamily
+        fontFamily: useSysFont==null||!useSysFont? globalFontFamily:null
       );
       isDarkThemeInit = true;
     }

@@ -7,6 +7,7 @@ import 'package:my_social/pages/error/error_page.dart';
 import 'package:my_social/pages/home/home_page.dart';
 import 'package:my_social/pages/login/phone_login_page.dart';
 import 'package:my_social/pages/note/note_detail_page.dart';
+import 'package:my_social/pages/notice/notice_page.dart';
 import 'package:my_social/pages/overview/drawer_route.dart';
 import 'package:my_social/pages/overview/overview_page.dart';
 import 'package:my_social/pages/index/index_page.dart';
@@ -16,6 +17,7 @@ import 'package:my_social/pages/person/person_page.dart';
 import 'package:my_social/pages/register/social_info_register_page.dart';
 import 'package:my_social/pages/register/account_register_page.dart';
 import 'package:my_social/pages/setting/general/general_setting_page.dart';
+import 'package:my_social/pages/setting/general/theme/theme_config_page.dart';
 import 'package:my_social/pages/setting/setting_page.dart';
 import 'package:my_social/pages/short_video/short_video_page.dart';
 
@@ -65,6 +67,12 @@ class AppRouterHolder{
             builder: (context, state) => SocialInfoRegisterPage(
               state
             ),
+          ),
+
+          // 公告页
+          GoRoute(
+            path: '/notice',
+            builder: (context, state) => NoticePage(),
           ),
 
           // 主页
@@ -177,9 +185,15 @@ class AppRouterHolder{
             builder: (context, state) => SettingPage(),
           ),
 
+          // 通用设置页面
           GoRoute(
             path: '/setting/general',
             builder: (context, state) => GeneralSettingPage(),
+          ),
+          // 主题设置页面
+          GoRoute(
+            path: '/setting/general/theme-config',
+            builder: (context, state) => ThemeConfigPage(),
           )
         ],
       );

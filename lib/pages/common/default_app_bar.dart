@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ming_cute_icons/ming_cute_icons.dart';
 
 AppBar defaultAppBar(){
@@ -18,11 +19,17 @@ AppBar defaultAppBar(){
       },
     ),
     actions: [
-      IconButton(
-        onPressed: (){},
-        icon: Badge(
-          child: Icon(MingCuteIcons.mgc_bell_ringing_line),
-        ),
+      Builder(
+        builder: (context) {
+          return IconButton(
+            onPressed: (){
+              context.push('/notice');
+            },
+            icon: Badge(
+              child: Icon(MingCuteIcons.mgc_bell_ringing_line),
+            ),
+          );
+        },
       )
     ],
   );

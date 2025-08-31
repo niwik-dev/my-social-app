@@ -1,23 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'general_setting_page.dart';
+part of 'notice_page.dart';
 
 // **************************************************************************
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class FontSizeSlide extends HookConsumerWidget {
-  const FontSizeSlide({Key? key}) : super(key: key);
+class NoticeDetailCard extends HookConsumerWidget {
+  const NoticeDetailCard(this.notice, {Key? key}) : super(key: key);
+
+  final NoticeResult notice;
 
   @override
   Widget build(BuildContext _context, WidgetRef _ref) =>
-      fontSizeSlide(_context, _ref);
+      noticeDetailCard(_ref, notice);
 }
 
-class GeneralSettingPage extends HookConsumerWidget {
-  const GeneralSettingPage({Key? key}) : super(key: key);
+class NoticePage extends HookConsumerWidget {
+  const NoticePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context, WidgetRef _ref) =>
-      generalSettingPage(_context, _ref);
+      noticePage(_ref, _context);
 }

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_social/constant/server_config.dart';
 import 'package:my_social/router/app_router.dart';
 import 'package:my_social/service/pref_service.dart';
 
@@ -52,8 +53,7 @@ class AuthRequestUtils{
   static Dio getInstance(){
     _dio = Dio(
       BaseOptions(
-        baseUrl: "http://127.0.0.1:8989",
-        // baseUrl: "http://117.50.162.112:8989",
+        baseUrl: "http://${ServerConfig.ipAddress}:${ServerConfig.httpPort}",
         validateStatus: (status) {
           return true;
         },
