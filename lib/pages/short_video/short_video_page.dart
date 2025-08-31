@@ -58,6 +58,7 @@ Widget shortVideoPageBody(BuildContext context,WidgetRef ref){
     Duration(milliseconds: 0)
   );
 
+  // 视频播放控制器
   VideoController videoController = useMemoized(
     ()=> VideoController(
       player,
@@ -91,6 +92,7 @@ Widget shortVideoPageBody(BuildContext context,WidgetRef ref){
       }
     });
 
+    // 监听视频播放进度
     player.stream.position.listen((event) {
       playProgress.value = player.state.position;
     });
@@ -213,7 +215,6 @@ Widget shortVideoPageBody(BuildContext context,WidgetRef ref){
                       videoInfo: shortVideoNotifier.getCurrentVideo(),
                     )
                   )
-
                 ],
               );
             },
@@ -267,11 +268,9 @@ Widget shortVideoPageBody(BuildContext context,WidgetRef ref){
               },
               onVerticalDragEnd: (details) {
                 if(commentSectionHeight.value < commentSectionMinExpandbleHeight()){
-                  commentSectionHeight.value = 0;
-                  isCommentSectionOpen.value = false;
+                  closeCommentSection();
                 }else{
-                  commentSectionHeight.value = commentSectionMaxHeight();
-                  isCommentSectionOpen.value = true;
+                  openCommentSection();
                 }
               },
               child: Builder(

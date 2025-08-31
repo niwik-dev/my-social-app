@@ -26,7 +26,6 @@ Widget commentSection(WidgetRef ref,{
   ShortVideoApi shortVideoApi = ShortVideoApi();
   
   useEffect((){
-
     scrollController.addListener((){
       if(scrollController.position.pixels >= scrollController.position.maxScrollExtent){
         shortVideoApi.getShortVideoComments(
@@ -44,7 +43,11 @@ Widget commentSection(WidgetRef ref,{
         );
       }
     });
+    return (){};
+  },[]);
 
+  useEffect((){
+    // 当videoInfo发生变化时，自动重新获取评论
     shortVideoApi.getShortVideoComments(
       ref,
       videoId: videoInfo.videoId,
@@ -52,12 +55,14 @@ Widget commentSection(WidgetRef ref,{
       pageSize: commentPageSize,
     ).then(
       (result) {
-        ++commentPageNum.value;
-        commentList.value = result!;
+        if(result!=null){
+          commentList.value = result;
+          ++commentPageNum.value;
+        }
       }
     );
     return (){};
-  },[]);
+  },[videoInfo]);
 
   return CustomScrollView(
     controller: scrollController,
@@ -150,7 +155,6 @@ Widget commentSection(WidgetRef ref,{
                         ),
                         onTap: (){},
                       ),
-
                     ],
                   )
                 ],
